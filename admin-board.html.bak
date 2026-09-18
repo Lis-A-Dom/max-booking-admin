@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Шахматка — Лис-А-Дом</title>
+<style>
+:root{--bg:#F5F5F7;--card:#FFFFFF;--text:#1D1D1F;--mut:#86868B;--line:#E5E5EA;--blue:#007AFF;--green:#34C759;--orange:#FF9500;--red:#FF3B30;--gray:#8E8E93}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:24px}
+.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+h1{font-size:22px;margin:0;font-weight:700}
+.navbtn{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 14px;font-size:16px;cursor:pointer;color:var(--text)}
+.month{font-size:17px;font-weight:700;min-width:150px;text-align:center}
+.addbtn{background:var(--blue);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-size:15px;font-weight:600;cursor:pointer}
+.logout{margin-left:auto;color:var(--mut);font-size:13px;text-decoration:none}
+.kpi{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.k{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 16px;font-size:13px;color:var(--mut)}
+.k b{color:var(--text);font-size:15px;margin-left:6px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;font-size:12px;color:var(--mut)}
+.legend span{display:flex;align-items:center;gap:6px}
+.dot{width:12px;height:12px;border-radius:4px;display:inline-block}
+.gridwrap{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:center}
+thead th{padding:10px 0;color:var(--mut);font-weight:600;border-bottom:1px solid var(--line)}
+thead th.we{color:var(--red)}
+thead th.today{background:var(--blue);color:#fff;border-radius:8px}
+td.name{text-align:left;padding:10px 12px;min-width:210px;border-right:1px solid var(--line);cursor:pointer}
+td.name b{display:block;font-size:14px}
+td.name small{color:var(--mut);font-size:11px}
+td.c{width:34px;height:44px;border:1px solid #F0F0F5;cursor:pointer}
+td.c:hover{background:#E8F1FD}
+td.b-pending{background:#FFE9C7}
+td.b-confirmed{background:#BBD8FF}
+td.b-paid{background:#BFF0CC}
+td.b-cancelled,td.b-rejected{background:#F6C6C6}
+td.b-avito{background:repeating-linear-gradient(45deg,#F3C1C1,#F3C1C1 4px,#FADADD 4px,#FADADD 8px)}
+td.first{border-radius:8px 0 0 8px}
+td.last{border-radius:0 8px 8px 0}
+#details{display:none;margin-top:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px 26px;box-shadow:0 4px 24px rgba(0,0,0,.06)}
+.row{display:flex;justify-content:space-between;gap:16px;padding:9px 2px;border-bottom:1px solid var(--line);font-size:15px}
+.row span{color:var(--mut)}
+.row b{font-weight:600;text-align:right}
+.sec{margin:16px 0 6px;font-size:11px;font-weight:700;letter-spacing:1px;color:var(--mut)}
+.pill{color:#fff;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:700}
+.box{border-radius:12px;padding:12px 16px;margin:8px 0;font-weight:600;font-size:14px}
+.box.ok{background:#E8F8EE;border:1px solid var(--green);color:#1B7E3E}
+.box.no{background:#FFF4E5;border:1px solid var(--orange);color:#B25E00}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.btn{border:none;border-radius:12px;padding:12px 18px;font-size:15px;font-weight:600;color:#fff;cursor:pointer;text-decoration:none;display:inline-block}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:50;align-items:center;justify-content:center}
+.modal.open{display:flex}
+.mcard{background:#fff;border-radius:20px;padding:26px;width:100%;max-width:420px}
+.mcard h2{margin:0 0 14px;font-size:20px}
+.mcard label{display:block;font-size:12px;color:var(--mut);margin:10px 0 4px}
+.mcard input,.mcard select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:#FBFBFD}
+.mrow2{display:flex;gap:10px}
+.mrow2>div{flex:1}
+.mbtns{display:flex;gap:10px;margin-top:18px}
+</style>
+</head>
+<body>
+<div class="top">
+ <h1>♟️ Шахматка бронирований</h1>
+ <button class="navbtn" onclick="shift(-1)">‹</button>
+ <div class="month" id="monthLabel"></div>
+ <button class="navbtn" onclick="shift(1)">›</button>
+ <button class="addbtn" onclick="openCreate()">+ Бронь</button>
+ <a class="logout" href="/admin/logout">Выйти</a>
+</div>
+<div class="kpi" id="stats"></div>
+<div class="legend">
+ <span><i class="dot" style="background:#F3C1C1"></i>Авито закрыто</span>
+ <span><i class="dot" style="background:#FFE9C7"></i>Заявка</span>
+ <span><i class="dot" style="background:#BBD8FF"></i>Подтверждена</span>
+ <span><i class="dot" style="background:#BFF0CC"></i>Залог оплачен</span>
+ <span><i class="dot" style="background:#F6C6C6"></i>Отменена</span>
+</div>
+<div class="gridwrap"><table id="grid"></table></div>
+<div id="details"></div>
+<div class="modal" id="modal">
+ <div class="mcard">
+  <h2>Новая бронь</h2>
+  <label>Имя гостя</label><input id="fName">
+  <label>Телефон</label><input id="fPhone">
+  <div class="mrow2">
+   <div><label>Заезд</label><input type="date" id="fIn"></div>
+   <div><label>Выезд</label><input type="date" id="fOut"></div>
+  </div>
+  <div class="mrow2">
+   <div><label>Гостей</label><input id="fGuests" value="2"></div>
+   <div><label>Сумма, ₽</label><input id="fTotal" type="number"></div>
+  </div>
+  <div class="mrow2">
+   <div><label>Статус</label><select id="fStatus"><option value="confirmed">Подтверждена</option><option value="pending">Заявка</option><option value="paid">Оплачена</option></select></div>
+   <div><label>Источник</label><select id="fSource"><option value="manual">Вручную</option><option value="avito">Авито</option><option value="max_app">MAX</option></select></div>
+  </div>
+  <div class="mbtns">
+   <button class="btn" style="background:#007AFF" onclick="createBooking()">Создать</button>
+   <button class="btn" style="background:#8E8E93" onclick="closeModal()">Отмена</button>
+  </div>
+ </div>
+</div>
+<script>
+let cur=new Date();let BOOKS=[];let AVITO=[];
+const MONTHS=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+const MD=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+function iso(y,m,d){return y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');}
+function nextDay(s){const d=new Date(s+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+1);return d.toISOString().slice(0,10);}
+function prevDay(s){const d=new Date(s+'T00:00:00Z');d.setUTCDate(d.getUTCDate()-1);return d.toISOString().slice(0,10);}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/'/g,'&#39;');}
+function fd(s){if(!s)return '—';const p=String(s).split('-');return parseInt(p[2])+' '+MD[parseInt(p[1])-1]+' '+p[0];}
+function fdt(s){if(!s)return '—';const d=new Date(s);return fd(String(s).slice(0,10))+', '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
+async function load(){const [r1,r2]=await Promise.all([fetch('/admin/api/bookings'),fetch('/admin/api/avito')]);BOOKS=await r1.json();AVITO=await r2.json();render();}
+function shift(d){cur.setMonth(cur.getMonth()+d);render();}
+function avitoHit(t){return AVITO.find(ev=>t>=ev.start&&t<ev.end);}
+function render(){
+ const y=cur.getFullYear(),m=cur.getMonth();
+ document.getElementById('monthLabel').textContent=MONTHS[m]+' '+y;
+ const days=new Date(y,m+1,0).getDate();
+ const today=new Date();const tISO=iso(today.getFullYear(),today.getMonth(),today.getDate());
+ let head='<tr><th style="min-width:210px;text-align:left;padding-left:12px">Канал / Гость</th>';
+ for(let d=1;d<=days;d++){const wd=new Date(y,m,d).getDay();head+='<th class="'+((wd===0||wd===6)?'we ':'')+(iso(y,m,d)===tISO?'today':'')+'">'+d+'</th>';}
+ head+='</tr>';
+ let av='<tr><td class="name" style="cursor:default"><b>🔒 Авито (закрыто)</b><small>синхронизация каждые 10 мин</small></td>';
+ for(let d=1;d<=days;d++){const t=iso(y,m,d);const hit=avitoHit(t);av+='<td class="'+(hit?'b-avito first last':'c')+'" style="'+(hit?'':'cursor:default')+'" title="'+(hit?esc(hit.summary):'')+'"></td>';}
+ av+='</tr>';
+ const lastDay=iso(y,m,days);
+ const list=BOOKS.filter(b=>b.checkOut>iso(y,m,1)&&b.checkIn<=lastDay).sort((a,b)=>a.checkIn.localeCompare(b.checkIn));
+ let rows='';
+ list.forEach(b=>{
+  rows+='<tr><td class="name" onclick="show(\''+b.id+'\')"><b>'+esc(b.name||'—')+'</b><small>'+b.id+' · '+b.checkIn.slice(8,10)+'.'+b.checkIn.slice(5,7)+' → '+b.checkOut.slice(8,10)+'.'+b.checkOut.slice(5,7)+'</small></td>';
+  for(let d=1;d<=days;d++){
+   const t=iso(y,m,d);
+   let cls='c';
+   if(t>=b.checkIn&&t<b.checkOut){cls='b-'+(b.status||'pending');if(t===b.checkIn)cls+=' first';if(t===prevDay(b.checkOut))cls+=' last';}
+   rows+='<td class="'+cls+'" onclick="cellClick(this,\''+t+'\')"></td>';
+  }
+  rows+='</tr>';
+ });
+ document.getElementById('grid').innerHTML=head+av+rows;
+ const paid=list.filter(b=>b.status==='paid'||b.status==='confirmed');
+ const nights=paid.reduce((s,b)=>s+(Number(b.nights)||0),0);
+ const sum=paid.reduce((s,b)=>s+(Number(b.total)||0),0);
+ const occ=new Set();paid.forEach(b=>{let t=b.checkIn;while(t<b.checkOut){occ.add(t);t=nextDay(t);}});
+ let inMonth=0;for(let d=1;d<=days;d++){if(occ.has(iso(y,m,d)))inMonth++;}
+ const avDays=new Set();for(let d=1;d<=days;d++){if(avitoHit(iso(y,m,d)))avDays.add(iso(y,m,d));}
+ document.getElementById('stats').innerHTML='<div class="k">Броней<b>'+list.length+'</b></div><div class="k">Ночей<b>'+nights+'</b></div><div class="k">Выручка<b>'+sum.toLocaleString('ru-RU')+' ₽</b></div><div class="k">Загрузка<b>'+Math.round(inMonth/days*100)+'%</b></div><div class="k">Закрыто Авито<b>'+avDays.size+' дн.</b></div>';
+}
+function cellClick(el,t){if(!el.className.includes(' c'))return;openCreate(t);}
+function openCreate(t){document.getElementById('modal').classList.add('open');if(t){document.getElementById('fIn').value=t;document.getElementById('fOut').value=nextDay(t);}}
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+async function createBooking(){
+ const body={name:document.getElementById('fName').value,phone:document.getElementById('fPhone').value,checkIn:document.getElementById('fIn').value,checkOut:document.getElementById('fOut').value,guests:document.getElementById('fGuests').value,total:document.getElementById('fTotal').value,status:document.getElementById('fStatus').value,source:document.getElementById('fSource').value};
+ const r=await fetch('/admin/api/create',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+ const d=await r.json();
+ if(d.ok){closeModal();load();}else{alert('Ошибка: '+(d.error||'неверные данные'));}
+}
+function show(id){
+ const b=BOOKS.find(x=>x.id===id);if(!b)return;
+ const st=b.status||'pending';
+ const PILL={pending:['#FF9500','Заявка'],confirmed:['#007AFF','Подтверждена'],paid:['#34C759','Залог оплачен'],cancelled:['#FF3B30','Отменена'],rejected:['#FF3B30','Отклонена']};
+ const pl=PILL[st]||PILL.pending;
+ const CH={max_app:'MAX (мини-приложение)',manual:'Вручную (телефон)',avito:'Авито'};
+ let btns='';
+ if(st==='pending')btns+='<button class="btn" style="background:#34C759" onclick="setStatus(\''+b.id+'\',\'confirmed\')">✅ Подтвердить</button><button class="btn" style="background:#FF3B30" onclick="setStatus(\''+b.id+'\',\'rejected\')">❌ Отклонить</button>';
+ else if(st==='confirmed')btns+='<a class="btn" style="background:#34C759" href="/api/act/paid/'+encodeURIComponent(b.id)+'" target="_blank">💰 Оплачено вручную</a><button class="btn" style="background:#FF3B30" onclick="setStatus(\''+b.id+'\',\'cancelled\')">❌ Отменить</button>';
+ else if(st==='paid')btns+='<a class="btn" style="background:#8E8E93" href="/api/act/refund/'+encodeURIComponent(b.id)+'" target="_blank">💸 Возврат залога</a><a class="btn" style="background:#8E8E93" href="/api/act/refund/'+encodeURIComponent(b.id)+'/manual" target="_blank">🧾 Частичный</a><button class="btn" style="background:#FF3B30" onclick="setStatus(\''+b.id+'\',\'cancelled\')">❌ Отменить</button>';
+ else btns+='<button class="btn" style="background:#007AFF" onclick="setStatus(\''+b.id+'\',\'pending\')">🔄 Вернуть в заявки</button>';
+ if(b.paymentUrl)btns+='<a class="btn" style="background:#007AFF" href="'+b.paymentUrl+'" target="_blank">💳 Ссылка на оплату</a>';
+ const row=(l,v)=>'<div class="row"><span>'+l+'</span><b>'+v+'</b></div>';
+ const sec=t=>'<div class="sec">'+t+'</div>';
+ document.getElementById('details').innerHTML='<div class="card">'+
+ '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">'+
+ '<h2 style="margin:0;font-size:22px">'+esc(b.name||'—')+'</h2><span class="pill" style="background:'+pl[0]+'">'+pl[1]+'</span></div>'+
+ '<div style="color:#86868B;font-size:13px;margin:6px 0 12px">'+b.id+' · забронировано '+fdt(b.created)+'</div>'+
+ sec('ГОСТЬ')+
+ row('Телефон','<a href="tel:'+esc(b.phone||'')+'" style="color:#007AFF;text-decoration:none">'+esc(b.phone||'—')+'</a>')+
+ row('Канал бронирования',CH[b.source]||b.source||'MAX')+
+ row('Гостей',esc(b.guests||'—'))+
+ (b.comment?row('Комментарий',esc(b.comment)):'')+
+ sec('ПРОЖИВАНИЕ')+
+ row('Заезд',fd(b.checkIn)+', с 15:00')+
+ row('Выезд',fd(b.checkOut)+', до 12:00')+
+ row('Ночей',b.nights||1)+
+ row('Стоимость',Number(b.total||0).toLocaleString('ru-RU')+' ₽')+
+ sec('ОПЛАТА')+
+ (b.paidAt?'<div class="box ok">💰 Залог внесён · 10 000 ₽ · '+fd(String(b.paidAt).slice(0,10))+'</div>':'<div class="box no">⚠️ Залог ещё не внесён</div>')+
+ (b.refundedAt?row('Возврат',Number(b.refundedAmount||0).toLocaleString('ru-RU')+' ₽ · '+fd(String(b.refundedAt).slice(0,10))):'')+
+ '<div class="btns">'+btns+'</div></div>';
+ document.getElementById('details').style.display='block';
+ document.getElementById('details').scrollIntoView({behavior:'smooth'});
+}
+async function setStatus(id,status){
+ await fetch('/admin/api/status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id,status:status})});
+ await load();show(id);
+}
+load();
+</script>
+</body>
+</html>

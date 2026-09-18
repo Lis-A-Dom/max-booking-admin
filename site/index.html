@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Лис-А-Дом «Чернобурка» — A-frame дом с панорамным остеклением и горячей купелью</title>
+<meta name="description" content="Уютный треугольный дом Чернобурка в Подмосковье: панорамные окна, горячая купель, умный дом с Алисой, мангал, 600 м² участок. Бронирование онлайн.">
+<meta name="keywords" content="A-frame дом Подмосковье, Чернобурка аренда, треугольный дом с купелью, дом посуточно, коттедж на выходные">
+<meta property="og:title" content="Лис-А-Дом «Чернобурка» — A-frame с купелью и панорамой леса">
+<meta property="og:description" content="Двухэтажный треугольный дом с панорамным остеклением, горячей купелью и умным домом. Подмосковье, пос. Солнечный круг.">
+<meta property="og:image" content="https://lis-a-dom.ru/images/001.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"LodgingBusiness","name":"Лис-А-Дом Чернобурка","image":"https://lis-a-dom.ru/images/001.jpg","priceRange":"6000-12000 RUB","address":{"@type":"PostalAddress","addressLocality":"пос. Солнечный круг","addressCountry":"RU"},"telephone":"+79998288006"}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --p:#C9733E;
+  --pd:#A85B2B;
+  --pl:#F5E6D8;
+  --d:#1A1714;
+  --t:#2C2724;
+  --m:#6E6761;
+  --bg:#FAF7F2;
+  --card:#fff;
+  --br:rgba(26,23,20,.08);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',-apple-system,sans-serif;color:var(--t);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+section{padding:80px 0}
+h2{font-size:clamp(28px,4.2vw,44px);font-weight:800;letter-spacing:-.7px;text-align:center;margin-bottom:14px;color:var(--d);line-height:1.15}
+.sub{text-align:center;color:var(--m);font-size:17px;max-width:620px;margin:0 auto 48px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;border-radius:14px;font-size:16px;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:.22s;font-family:inherit}
+.btn-p{background:var(--p);color:#fff;box-shadow:0 10px 28px rgba(201,115,62,.32)}
+.btn-p:hover{background:var(--pd);transform:translateY(-2px);box-shadow:0 14px 36px rgba(201,115,62,.45)}
+.btn-o{background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.4);color:#fff;backdrop-filter:blur(10px)}
+.btn-o:hover{background:rgba(255,255,255,.26)}
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--br);transition:.3s}
+.nav-inner{max-width:1180px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--d);font-weight:800;font-size:18px}
+.logo-ico{width:34px;height:34px;background:var(--p);border-radius:10px;display:grid;place-items:center;font-size:18px}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:var(--t);text-decoration:none;font-weight:600;font-size:15px;transition:.2s}
+.nav-links a:hover{color:var(--p)}
+.nav-phone{color:var(--p)!important;font-weight:700}
+@media(max-width:820px){.nav-links a:not(.nav-phone){display:none}}
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;position:relative;padding:120px 20px 70px;background:linear-gradient(rgba(10,8,5,.35),rgba(10,8,5,.55)),url('/images/001.jpg') center/cover;background-attachment:fixed}
+.hero-inner{max-width:820px;z-index:2}
+.badge{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(10px);padding:9px 20px;border-radius:100px;font-size:14px;font-weight:600;margin-bottom:22px;letter-spacing:.5px}
+.hero h1{font-size:clamp(42px,7.5vw,74px);font-weight:800;letter-spacing:-2px;line-height:1.05;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:#F5B886;display:block}
+.hero p{font-size:clamp(17px,2.3vw,21px);opacity:.95;max-width:620px;margin:0 auto 28px;line-height:1.5}
+.hero-price{display:inline-block;background:rgba(255,255,255,.14);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.25);padding:10px 22px;border-radius:14px;font-size:18px;font-weight:600;margin-bottom:28px}
+.hero-price b{color:#F5B886;font-size:24px}
+.stats{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+.stat{text-align:center}
+.stat b{display:block;font-size:32px;font-weight:800;line-height:1.1}
+.stat span{font-size:13px;opacity:.85;letter-spacing:.3px;text-transform:uppercase}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.scroll-down{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);color:#fff;opacity:.8;animation:bob 2s ease-in-out infinite;text-decoration:none;font-size:24px}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,10px)}}
+/* BOOKING */
+.booking{background:var(--card);padding:64px 0}
+.phone-frame{max-width:420px;margin:0 auto;border-radius:32px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.18),0 0 0 10px #1A1714;position:relative}
+.phone-frame:before{content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);width:100px;height:22px;background:#000;border-radius:100px;z-index:5}
+.phone-frame iframe{width:100%;height:680px;border:none;display:block;background:#111}
+.b-note{text-align:center;color:var(--m);font-size:14px;margin-top:22px;max-width:520px;margin-left:auto;margin-right:auto}
+/* FEATURES */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.feat{background:var(--card);border-radius:22px;padding:32px 26px;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,.05);transition:.28s;border:1px solid var(--br)}
+.feat:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(0,0,0,.1)}
+.feat .i{font-size:46px;margin-bottom:14px}
+.feat h3{font-size:18px;color:var(--d);margin-bottom:8px;font-weight:700}
+.feat p{font-size:14.5px;color:var(--m);line-height:1.55}
+/* ABOUT A-FRAME */
+.about{background:linear-gradient(180deg,#fff 0%,var(--bg) 100%)}
+.about-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:52px;align-items:center}
+.about-img{border-radius:26px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.14);aspect-ratio:4/5;background:url('/images/002.jpg') center/cover}
+.about h2{text-align:left}
+.about p.lead{font-size:18px;color:var(--m);margin:12px 0 26px;line-height:1.6}
+.spec-list{list-style:none;margin-top:16px}
+.spec-list li{padding:14px 0;border-bottom:1px solid var(--br);display:flex;justify-content:space-between;align-items:center;font-size:15.5px}
+.spec-list li b{color:var(--d);font-weight:700}
+@media(max-width:820px){.about-grid{grid-template-columns:1fr;gap:32px}.about h2{text-align:center}.about-img{aspect-ratio:16/10}}
+/* GALLERY */
+.gal{background:var(--card)}
+.gal-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:180px;gap:10px}
+.gal-grid img{width:100%;height:100%;object-fit:cover;border-radius:14px;cursor:pointer;transition:.25s}
+.gal-grid img:hover{transform:scale(1.02);box-shadow:0 14px 36px rgba(0,0,0,.15)}
+.gal-grid img.wide{grid-column:span 2}
+.gal-grid img.tall{grid-row:span 2}
+@media(max-width:820px){.gal-grid{grid-template-columns:repeat(2,1fr)}.gal-grid img.wide{grid-column:span 2}}
+.lb{position:fixed;inset:0;background:rgba(10,8,5,.96);display:none;align-items:center;justify-content:center;z-index:200;padding:30px}
+.lb.open{display:flex}
+.lb img{max-width:94vw;max-height:88vh;border-radius:14px}
+.lb-x{position:absolute;top:18px;right:24px;color:#fff;font-size:36px;cursor:pointer;background:none;border:none}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);color:#fff;font-size:48px;cursor:pointer;background:none;border:none;padding:10px;user-select:none;opacity:.8}
+.lb-nav:hover{opacity:1}
+.lb-prev{left:12px}.lb-next{right:12px}
+/* ROOMS / ZONES */
+.rooms{background:var(--bg)}
+.room-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+.room{background:var(--card);border-radius:22px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.06);transition:.28s}
+.room:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(0,0,0,.1)}
+.room-img{aspect-ratio:16/10;background-size:cover;background-position:center}
+.room-body{padding:24px}
+.room h3{font-size:19px;color:var(--d);margin-bottom:8px;font-weight:700}
+.room .sq{display:inline-block;background:var(--pl);color:var(--pd);padding:4px 12px;border-radius:100px;font-size:13px;font-weight:700;margin-bottom:10px}
+.room p{color:var(--m);font-size:14.5px;line-height:1.55}
+/* SEASONS */
+.seasons{background:var(--card)}
+.season-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.season{border-radius:22px;padding:28px 24px;color:#fff;position:relative;overflow:hidden;min-height:260px;display:flex;flex-direction:column;justify-content:flex-end;background-size:cover;background-position:center}
+.season:before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.72));z-index:1}
+.season>*{position:relative;z-index:2}
+.season h3{font-size:26px;margin-bottom:8px;font-weight:800}
+.season p{font-size:14.5px;opacity:.95;line-height:1.5}
+/* PRICES */
+.prices{background:var(--bg)}
+.price-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:900px;margin:0 auto}
+.pc{background:var(--card);border-radius:22px;padding:32px;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,.06);position:relative;border:2px solid transparent;transition:.25s}
+.pc.hot{background:linear-gradient(140deg,var(--p),var(--pd));color:#fff;border-color:transparent;transform:scale(1.04);box-shadow:0 20px 48px rgba(201,115,62,.35)}
+.pc:hover{transform:translateY(-4px)}
+.pc.hot:hover{transform:scale(1.04) translateY(-4px)}
+.pc .tag{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--d);color:#fff;font-size:12px;padding:5px 14px;border-radius:100px;font-weight:700;letter-spacing:.5px}
+.pc h3{font-size:18px;margin-bottom:4px;font-weight:700}
+.pc .amt{font-size:42px;font-weight:800;margin:14px 0}
+.pc .amt small{font-size:16px;font-weight:500;opacity:.8}
+.pc ul{list-style:none;text-align:left;margin:16px 0 22px}
+.pc li{padding:8px 0;font-size:14.5px;border-bottom:1px solid var(--br)}
+.pc.hot li{border-color:rgba(255,255,255,.2)}
+.dep-note{max-width:640px;margin:32px auto 0;background:var(--pl);border-radius:16px;padding:18px 22px;font-size:14.5px;text-align:center;color:var(--d)}
+.dep-note b{color:var(--pd)}
+/* STEPS */
+.steps{background:var(--card)}
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.step{background:var(--bg);border-radius:22px;padding:32px 26px;text-align:center}
+.step .n{width:52px;height:52px;border-radius:50%;background:var(--p);color:#fff;font-size:22px;font-weight:800;display:grid;place-items:center;margin:0 auto 16px}
+.step h3{font-size:18px;color:var(--d);margin-bottom:8px;font-weight:700}
+.step p{font-size:14.5px;color:var(--m);line-height:1.55}
+/* FAQ */
+.faq{background:var(--bg)}
+.faq-wrap{max-width:760px;margin:0 auto}
+details{background:var(--card);border-radius:16px;margin-bottom:10px;box-shadow:0 2px 10px rgba(0,0,0,.04);overflow:hidden;border:1px solid var(--br)}
+summary{padding:20px 24px;font-weight:700;font-size:16px;cursor:pointer;color:var(--d);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+summary:after{content:'+';font-size:24px;color:var(--p);font-weight:400;flex-shrink:0;transition:.2s}
+details[open] summary:after{transform:rotate(45deg)}
+details div{padding:0 24px 20px;color:var(--m);font-size:15px;line-height:1.6}
+/* CTA */
+.cta{background:linear-gradient(135deg,#1A1714,#2C2724);color:#fff;text-align:center;position:relative;overflow:hidden}
+.cta:before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(201,115,62,.2),transparent 70%);pointer-events:none}
+.cta h2{color:#fff;position:relative}
+.cta p{opacity:.85;margin-bottom:30px;font-size:18px;max-width:520px;margin-left:auto;margin-right:auto;position:relative}
+.cta-phone{display:inline-block;font-size:clamp(24px,5vw,40px);font-weight:800;color:#F5B886;text-decoration:none;margin-bottom:22px;position:relative}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative}
+/* FOOTER */
+footer{background:#1A1714;color:#fff;padding:56px 0 28px}
+.foot-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px;margin-bottom:32px}
+@media(max-width:720px){.foot-grid{grid-template-columns:1fr}}
+.foot h4{color:#F5B886;font-size:14px;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
+.foot a{color:rgba(255,255,255,.75);text-decoration:none;display:block;padding:5px 0;font-size:15px;transition:.2s}
+.foot a:hover{color:#F5B886}
+.foot-brand{font-size:22px;font-weight:800;margin-bottom:10px}
+.foot-slogan{color:rgba(255,255,255,.6);font-size:14px;line-height:1.6;margin-bottom:16px}
+.foot-bot{border-top:1px solid rgba(255,255,255,.1);padding-top:22px;text-align:center;font-size:13px;color:rgba(255,255,255,.5)}
+/* FLOAT */
+.float{position:fixed;bottom:22px;right:22px;z-index:90;background:var(--p);color:#fff;padding:14px 22px;border-radius:100px;text-decoration:none;font-weight:700;box-shadow:0 10px 30px rgba(201,115,62,.4);transition:.2s;display:flex;align-items:center;gap:8px}
+.float:hover{background:var(--pd);transform:translateY(-2px)}
+.whats{background:#25D366;box-shadow:0 10px 30px rgba(37,211,102,.4);bottom:84px}
+.whats:hover{background:#1EBE5A}
+.rv{opacity:0;transform:translateY(30px);transition:opacity .65s,transform .65s}
+.rv.v{opacity:1;transform:none}
+@media(max-width:820px){section{padding:56px 0}.phone-frame iframe{height:620px}.float{bottom:16px;right:16px;padding:12px 18px;font-size:14px}.whats{bottom:72px}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo"><span class="logo-ico">🦊</span>Лис-А-Дом</a>
+    <div class="nav-links">
+      <a href="#about">О доме</a>
+      <a href="#rooms">Зоны</a>
+      <a href="#gallery">Фото</a>
+      <a href="#prices">Цены</a>
+      <a href="tel:+79998288006" class="nav-phone">+7 999 828-80-06</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="badge">🔺 A-frame · пос. Солнечный круг · Подмосковье</div>
+    <h1>Чернобурка<em>дом среди леса</em></h1>
+    <p>Треугольный дом с панорамным остеклением, горячей купелью под звёздами и умным домом с Алисой. Идеальное место для перезагрузки.</p>
+    <div class="hero-price">от <b class="js-price">8 400</b> ₽ / ночь</div>
+    <div class="stats">
+      <div class="stat"><b>2</b><span>этажа</span></div>
+      <div class="stat"><b>2</b><span>спальни</span></div>
+      <div class="stat"><b>6</b><span>гостей</span></div>
+      <div class="stat"><b>600 м²</b><span>участок</span></div>
+    </div>
+    <div class="hero-btns">
+      <a href="#booking" class="btn btn-p">📅 Забронировать</a>
+      <a href="#gallery" class="btn btn-o">📸 Смотреть фото</a>
+    </div>
+  </div>
+  <a href="#booking" class="scroll-down">↓</a>
+</header>
+
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <div class="wrap">
+    <h2>Бронирование онлайн</h2>
+    <p class="sub">Выберите даты в календаре — система покажет свободные дни и точную стоимость. Залог 10 000 ₽ полностью возвращается после выезда.</p>
+    <div class="phone-frame rv"><iframe src="/app/" title="Бронирование Лис-А-Дом" loading="lazy"></iframe></div>
+    <p class="b-note">🔒 Залог 10 000 ₽ — возвращается после уборки · Остальное — при заезде · Заезд с 15:00, выезд до 12:00</p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-img rv"></div>
+      <div class="rv">
+        <h2>О доме «Чернобурка»</h2>
+        <p class="lead">Двухэтажный треугольный дом с панорамным остеклением, названный в честь харизматичной чернобурки. Светлые тона, графитовые и рыжие акценты, живые растения и уютный текстиль — атмосфера, в которой хочется остаться подольше.</p>
+        <ul class="spec-list">
+          <li>🔺 Архитектура <b>A-frame</b></li>
+          <li>🪟 Панорамное остекление <b>с видом на лес</b></li>
+          <li>🏠 Общая площадь <b>≈ 64 м²</b></li>
+          <li>🛏 Спальни <b>2 (12 и 20 м²)</b></li>
+          <li>🚿 Санузел <b>6 м², тропический душ</b></li>
+          <li>🔥 Тёплый пол <b>по всему дому</b></li>
+          <li>🎙 Умный дом <b>через Алису</b></li>
+          <li>🤖 Робот-пылесос <b>входит в стоимость</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section>
+  <div class="wrap">
+    <h2>Что есть в доме</h2>
+    <p class="sub">Всё для комфортной жизни — заезжайте с продуктами и живите</p>
+    <div class="feat-grid">
+      <div class="feat rv"><div class="i">🎙</div><h3>Умный дом с Алисой</h3><p>Управляйте светом, тёплым полом, чайником и купелью голосом</p></div>
+      <div class="feat rv"><div class="i">🛁</div><h3>Горячая купель</h3><p>С автоподогревом и фильтрацией — даже зимой под звёздами</p></div>
+      <div class="feat rv"><div class="i">🪢</div><h3>Сетка-гамак</h3><p>Под потолком в гостиной — уникальное место для релакса</p></div>
+      <div class="feat rv"><div class="i">🪑</div><h3>Подвесные качели</h3><p>У панорамных окон — читать книгу и смотреть на лес</p></div>
+      <div class="feat rv"><div class="i">📺</div><h3>Smart TV и проектор</h3><p>Киносеансы вечером в гостиной и спальнях</p></div>
+      <div class="feat rv"><div class="i">🍳</div><h3>Полная кухня</h3><p>Холодильник, плита, микроволновка, посудомойка, посуда на 12 персон</p></div>
+      <div class="feat rv"><div class="i">🧺</div><h3>Стиральная машина</h3><p>И фен, мягкие полотенца и всё необходимое</p></div>
+      <div class="feat rv"><div class="i">🔥</div><h3>Тёплый пол</h3><p>По всему дому — комфортно даже зимой босиком</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ROOMS -->
+<section class="rooms" id="rooms">
+  <div class="wrap">
+    <h2>Зоны дома</h2>
+    <p class="sub">Каждое пространство продумано — для сна, отдыха и готовки</p>
+    <div class="room-grid">
+      <div class="room rv"><div class="room-img" style="background-image:url('/images/009.jpg')"></div><div class="room-body"><span class="sq">24 м²</span><h3>Кухня-гостиная</h3><p>Светлое пространство с диваном, обеденной зоной, Smart TV, Алисой и сеткой-гамаком под потолком.</p></div></div>
+      <div class="room rv"><div class="room-img" style="background-image:url('/images/010.jpg')"></div><div class="room-body"><span class="sq">12 + 20 м²</span><h3>Две спальни</h3><p>На первом этаже — с двуспальной кроватью и TV. На втором — с панорамным остеклением и видом на лес.</p></div></div>
+      <div class="room rv"><div class="room-img" style="background-image:url('/images/011.jpg')"></div><div class="room-body"><span class="sq">6 м²</span><h3>Современная ванная</h3><p>Тропический душ, стиральная машина, мягкие полотенца и косметика. Продумано до мелочей.</p></div></div>
+      <div class="room rv"><div class="room-img" style="background-image:url('/images/024.jpg')"></div><div class="room-body"><span class="sq">24 м²</span><h3>Открытая терраса</h3><p>Под яблонями с садовой мебелью. Рядом — горячая купель с автоподогревом.</p></div></div>
+      <div class="room rv"><div class="room-img" style="background-image:url('/images/025.jpg')"></div><div class="room-body"><span class="sq">под навесом</span><h3>Мангальная зона</h3><p>Готовьте шашлык даже под дождём — надёжный козырёк защитит от непогоды.</p></div></div>
+      <div class="room rv"><div class="room-img" style="background-image:url('/images/026.jpg')"></div><div class="room-body"><span class="sq">16 м²</span><h3>Костровая и беседка</h3><p>Уютные вечера у костра, песни под гитару и ужины на свежем воздухе.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gal" id="gallery">
+  <div class="wrap">
+    <h2>Фотографии дома</h2>
+    <p class="sub">Нажмите на фото, чтобы рассмотреть подробнее</p>
+    <div class="gal-grid" id="galGrid"></div>
+  </div>
+</section>
+
+<!-- SEASONS -->
+<section class="seasons">
+  <div class="wrap">
+    <h2>Отдых в любое время года</h2>
+    <p class="sub">Дом создан для комфорта и в снежную зиму, и в цветущую весну</p>
+    <div class="season-grid">
+      <div class="season rv" style="background-image:url('/images/016.jpg')"><h3>☀️ Лето</h3><p>Гамаки, купель, шашлыки и вечера у костра под звёздами</p></div>
+      <div class="season rv" style="background-image:url('/images/017.jpg')"><h3>❄️ Зима</h3><p>Тёплый пол, горячая купель под открытым небом, панорама снега</p></div>
+      <div class="season rv" style="background-image:url('/images/018.jpg')"><h3>🍂 Осень</h3><p>Пледы, горячие напитки, вид на золотой лес и уютный интерьер</p></div>
+      <div class="season rv" style="background-image:url('/images/019.jpg')"><h3>🌷 Весна</h3><p>Пение птиц, цветущие яблони, утренний кофе на террасе</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICES -->
+<section class="prices" id="prices">
+  <div class="wrap">
+    <h2>Прозрачные цены</h2>
+    <p class="sub">Точную стоимость за ваш заезд календарь посчитает сам — без скрытых платежей</p>
+    <div class="price-cards">
+      <div class="pc rv"><h3>Будни</h3><div class="amt"><span class="js-price">8 400</span> ₽<small>/ночь</small></div><ul><li>✓ Пн — Чт</li><li>✓ от 1 ночи</li><li>✓ до 6 гостей</li></ul><a href="#booking" class="btn btn-p" style="width:100%;justify-content:center">Выбрать даты</a></div>
+      <div class="pc hot rv"><div class="tag">чаще бронируют</div><h3>Выходные</h3><div class="amt">12 400 ₽<small>/ночь</small></div><ul><li>✓ Пт — Вс</li><li>✓ от 2 ночей</li><li>✓ до 6 гостей</li></ul><a href="#booking" class="btn" style="width:100%;justify-content:center;background:#fff;color:var(--pd)">Выбрать даты</a></div>
+      <div class="pc rv"><h3>Праздники</h3><div class="amt">24 000 ₽<small>/ночь</small></div><ul><li>✓ Новый год, майские и др.</li><li>✓ от 3 ночей</li><li>✓ до 6 гостей</li></ul><a href="#booking" class="btn btn-p" style="width:100%;justify-content:center">Выбрать даты</a></div>
+    </div>
+    <div class="dep-note">🔒 Залог <b>10 000 ₽</b> — оплачивается при бронировании и <b>полностью возвращается</b> после выезда и уборки. Остальная сумма — при заезде.</div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="steps">
+  <div class="wrap">
+    <h2>Как забронировать</h2>
+    <p class="sub">Три простых шага — и Чернобурка ваша</p>
+    <div class="steps-grid">
+      <div class="step rv"><div class="n">1</div><h3>Выберите даты</h3><p>Календарь выше покажет свободные дни и точную цену за ваш заезд</p></div>
+      <div class="step rv"><div class="n">2</div><h3>Внесите залог</h3><p>10 000 ₽ онлайн — бронь сразу подтверждается, даты закрываются</p></div>
+      <div class="step rv"><div class="n">3</div><h3>Отдыхайте</h3><p>Приезжайте с 15:00. Залог вернём полностью после уборки</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="wrap faq-wrap">
+    <h2>Частые вопросы</h2>
+    <p class="sub">Нет ответа — напишите нам в MAX или Telegram, ответим за минуту</p>
+    <details><summary>Во сколько заезд и выезд?</summary><div>Заезд с 15:00, выезд до 12:00. Ранний заезд и поздний выезд — по согласованию, при наличии свободных окон.</div></details>
+    <details><summary>Можно с животными?</summary><div>Да, мелкие питомцы до 10 кг — по согласованию, +1 000 ₽ за заезд. Крупные собаки — обсудим лично.</div></details>
+    <details><summary>Купель входит в стоимость?</summary><div>Да, горячая купель с автоподогревом и фильтрацией доступна всем гостям без доплаты. Дрова для бани — по запросу.</div></details>
+    <details><summary>Как добраться?</summary><div>пос. Солнечный круг, Подмосковье. Точный адрес и маршрут пришлём после бронирования вместе с QR-кодом. Парковка на 2 машины — на территории.</div></details>
+    <details><summary>Какие условия отмены?</summary><div>Полный возврат залога при отмене за 7 дней и более. Менее 7 дней — возврат 50%. При отмене с нашей стороны — возврат 100% всегда.</div></details>
+    <details><summary>Что взять с собой?</summary><div>Только продукты и хорошее настроение: бельё, полотенца, посуда, мангал, дрова и всё остальное уже на месте.</div></details>
+    <details><summary>Алиса и умный дом — это сложно?</summary><div>Нет, всё просто. Говорите «Алиса, включи свет» или «Алиса, нагрей купель» — дом откликнется. Инструкцию оставим на видном месте.</div></details>
+    <details><summary>Сколько гостей максимум?</summary><div>Комфортно до 6 человек: 2 двуспальные кровати + диван в гостиной. С детьми — до 8, обсудим индивидуально.</div></details>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="wrap">
+    <h2>Готовы к перезагрузке?</h2>
+    <p>Свободные даты разлетаются — особенно выходные. Выберите свои прямо сейчас или позвоните — ответим на все вопросы.</p>
+    <a href="tel:+79998288006" class="cta-phone">+7 999 828-80-06</a>
+    <div class="cta-btns">
+      <a href="#booking" class="btn btn-p">📅 Забронировать онлайн</a>
+      <a href="https://t.me/Olesya_Koroshikh" target="_blank" class="btn btn-o">✈️ Написать в Telegram</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot">
+        <div class="foot-brand">🦊 Лис-А-Дом «Чернобурка»</div>
+        <div class="foot-slogan">Треугольный дом с панорамным остеклением среди леса. Гармония природы и современного комфорта.</div>
+        <a href="tel:+79998288006" style="color:#F5B886;font-weight:700;font-size:17px">+7 999 828-80-06</a>
+      </div>
+      <div class="foot">
+        <h4>Навигация</h4>
+        <a href="#about">О доме</a>
+        <a href="#rooms">Зоны</a>
+        <a href="#gallery">Фото</a>
+        <a href="#prices">Цены</a>
+        <a href="#booking">Бронирование</a>
+      </div>
+      <div class="foot">
+        <h4>Контакты</h4>
+        <a href="tel:+79998288006">📞 +7 999 828-80-06</a>
+        <a href="https://t.me/Olesya_Koroshikh" target="_blank">✈️ Telegram: Олеся</a>
+        <a href="https://wa.me/79998288006" target="_blank">💬 WhatsApp</a>
+        <a>📍 пос. Солнечный круг</a>
+      </div>
+    </div>
+    <div class="foot-bot">© 2024–2026 Лис-А-Дом. Все права защищены. Аренда дома посуточно в Подмосковье.</div>
+  </div>
+</footer>
+
+<a href="https://wa.me/79998288006" target="_blank" class="float whats">💬 WhatsApp</a>
+<a href="#booking" class="float">📅 Забронировать</a>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb"><button class="lb-x" onclick="closeLb()">×</button><button class="lb-nav lb-prev" onclick="navLb(-1)">‹</button><img id="lbImg" src="" alt=""><button class="lb-nav lb-next" onclick="navLb(1)">›</button></div>
+
+<script>
+// Галерея — используем все доступные фото
+var PHOTOS=['/images/001.jpg','/images/002.jpg','/images/003.jpg','/images/009.jpg','/images/010.jpg','/images/011.jpg','/images/012.jpg','/images/016.jpg','/images/017.jpg','/images/018.jpg','/images/019.jpg','/images/024.jpg','/images/025.jpg','/images/026.jpg'];
+var grid=document.getElementById('galGrid');
+PHOTOS.forEach(function(p,i){
+  var im=document.createElement('img');
+  im.src=p;
+  im.loading='lazy';
+  im.alt='Лис-А-Дом Чернобурка фото '+(i+1);
+  im.onclick=function(){openLb(i);};
+  if(i===0){im.className='tall';}
+  else if(i===3){im.className='wide';}
+  else if(i===7){im.className='wide';}
+  grid.appendChild(im);
+});
+var cur=0;
+function openLb(i){cur=i;document.getElementById('lbImg').src=PHOTOS[i];document.getElementById('lb').classList.add('open');}
+function closeLb(){document.getElementById('lb').classList.remove('open');}
+function navLb(d){cur=(cur+d+PHOTOS.length)%PHOTOS.length;document.getElementById('lbImg').src=PHOTOS[cur];}
+document.getElementById('lb').addEventListener('click',function(e){if(e.target===this)closeLb();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLb();if(e.key==='ArrowRight')navLb(1);if(e.key==='ArrowLeft')navLb(-1);});
+// Цены из API
+(function(){
+  var t=new Date();t.setDate(t.getDate()+7);
+  var t2=new Date(t);t2.setDate(t2.getDate()+1);
+  var f=function(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+  fetch('/api/prices?from='+f(t)+'&to='+f(t2)).then(function(r){return r.json();}).then(function(j){
+    if(j&&j.base){document.querySelectorAll('.js-price').forEach(function(el){el.textContent=new Intl.NumberFormat('ru-RU').format(j.base);});}
+  }).catch(function(){});
+})();
+// Scroll-reveal
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('v');io.unobserve(e.target);}});},{threshold:.12});
+document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+</script>
+</body>
+</html>

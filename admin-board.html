@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Лис-А-Дом · Админка</title>
+<style>
+:root{--bg:#F2F2F7;--card:#FFFFFF;--text:#1C1C1E;--mut:#86868B;--mut2:#6E6E73;--line:rgba(60,60,67,.10);--blue:#007AFF;--green:#34C759;--orange:#FF9F0A;--red:#FF3B30;--purple:#AF52DE;--teal:#30B0C7}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,sans-serif;padding:28px;-webkit-font-smoothing:antialiased}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05)}
+.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+.logo{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#FFD60A,#FF9F0A);display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 12px rgba(255,159,10,.35)}
+.ttl h1{margin:0;font-size:22px;font-weight:700;letter-spacing:-.3px}
+.ttl small{color:var(--mut);font-size:12px}
+.seg{background:#E9E9EB;border-radius:11px;padding:2px;display:flex;margin-left:12px}
+.seg button{border:none;background:transparent;padding:7px 14px;border-radius:9px;font-size:14px;color:var(--text);cursor:pointer}
+.seg .cur{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.14);font-weight:600;cursor:default;min-width:130px}
+.addbtn{background:var(--blue);color:#fff;border:none;border-radius:11px;padding:10px 18px;font-size:15px;font-weight:600;cursor:pointer;box-shadow:0 3px 10px rgba(0,122,255,.3)}
+.addbtn:hover{background:#0066D6}
+.logout{margin-left:auto;background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.35);padding:8px 18px;border-radius:10px;font-size:13px;font-weight:600;text-decoration:none;transition:.2s}
+.logout:hover{background:rgba(239,68,68,.25);color:#fca5a5}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:14px}
+.kpi{display:flex;align-items:center;gap:12px;padding:16px}
+.kicon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex:0 0 auto}
+.kpi b{display:block;font-size:20px;font-weight:700;letter-spacing:-.3px}
+.kpi span{color:var(--mut);font-size:12px}
+.row2{display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:14px}
+@media(max-width:800px){.row2{grid-template-columns:1fr}}
+.chartcard{padding:18px 20px}
+.chead{font-size:13px;font-weight:600;color:var(--mut2);margin-bottom:14px}
+.chart{display:flex;align-items:flex-end;gap:12px;height:110px}
+.col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:6px}
+.col .bar{background:linear-gradient(180deg,#6BB8FF,#007AFF);border-radius:7px 7px 3px 3px;min-height:4px}
+.col b{font-size:11px;text-align:center;color:var(--mut2);font-weight:600}
+.col span{font-size:11px;color:var(--mut);text-align:center}
+.chips{display:flex;flex-direction:column;gap:10px}
+.chip{display:flex;align-items:center;gap:10px;font-size:14px}
+.chip .dot{width:10px;height:10px;border-radius:50%}
+.chip b{margin-left:auto;font-weight:600}
+.gridcard{padding:6px 0 0;margin-bottom:16px;overflow:hidden}
+.ghead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 20px}
+.ghead b{font-size:15px}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--mut2)}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.gridwrap{overflow:auto;border-top:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:center}
+thead th{padding:10px 0;color:var(--mut);font-weight:600;font-size:12px}
+thead th.we{color:var(--red)}
+thead th.today{background:var(--blue);color:#fff;border-radius:8px}
+td.name{text-align:left;padding:10px 14px;min-width:220px;border-right:1px solid var(--line);cursor:pointer}
+td.name:hover{background:#F5F9FF}
+td.name b{display:block;font-size:14px;font-weight:600}
+td.name small{color:var(--mut);font-size:11px}
+td.c{width:34px;height:42px;border:1px solid #F4F4F6;cursor:pointer}
+td.c.we{background:#FAFAFC}
+td.c.today{background:#F0F6FF}
+td.c:hover{background:#E8F1FD}
+td.b-pending{background:#FFF3E0;box-shadow:inset 0 0 0 1px rgba(255,159,10,.35)}
+td.b-confirmed{background:#E3F0FF;box-shadow:inset 0 0 0 1px rgba(0,122,255,.35)}
+td.b-paid{background:#E4F8EB;box-shadow:inset 0 0 0 1px rgba(52,199,89,.4)}
+td.b-cancelled,td.b-rejected{background:#FFE9E9;box-shadow:inset 0 0 0 1px rgba(255,59,48,.3)}
+td.b-avito{background:repeating-linear-gradient(45deg,#F6D3D3,#F6D3D3 4px,#FBEAEA 4px,#FBEAEA 8px)}
+td.first{border-radius:9px 0 0 9px}
+td.last{border-radius:0 9px 9px 0}
+#details{display:none;margin-bottom:16px}
+.dcard{padding:24px 26px}
+.dhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.dhead h2{margin:0;font-size:22px;font-weight:700;letter-spacing:-.3px}
+.dsub{color:var(--mut);font-size:13px;margin-top:4px}
+.close{width:30px;height:30px;border-radius:50%;border:none;background:rgba(60,60,67,.08);color:var(--mut2);font-size:17px;cursor:pointer;line-height:1}
+.close:hover{background:rgba(255,59,48,.12);color:var(--red)}
+.pill{color:#fff;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:700}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px;margin-top:8px}
+@media(max-width:800px){.dgrid{grid-template-columns:1fr}}
+.row{display:flex;justify-content:space-between;gap:16px;padding:9px 2px;border-bottom:1px solid var(--line);font-size:15px}
+.row span{color:var(--mut)}
+.row b{font-weight:600;text-align:right}
+.sec{margin:16px 0 6px;font-size:11px;font-weight:700;letter-spacing:1px;color:var(--mut)}
+.box{border-radius:12px;padding:12px 16px;margin:10px 0;font-weight:600;font-size:14px}
+.box.ok{background:#E4F8EB;border:1px solid rgba(52,199,89,.5);color:#1B7E3E}
+.box.no{background:#FFF3E0;border:1px solid rgba(255,159,10,.5);color:#B25E00}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.btn{border:none;border-radius:11px;padding:11px 18px;font-size:14px;font-weight:600;color:#fff;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{filter:brightness(.94)}
+.modal{display:none;position:fixed;inset:0;background:rgba(28,28,30,.35);backdrop-filter:blur(4px);z-index:50;align-items:center;justify-content:center}
+.modal.open{display:flex}
+.mcard{background:#fff;border-radius:20px;padding:26px;width:100%;max-width:430px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.mcard h2{margin:0 0 14px;font-size:20px;font-weight:700}
+.mcard label{display:block;font-size:12px;color:var(--mut);margin:10px 0 4px}
+.mcard input,.mcard select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:#FBFBFD}
+.mrow2{display:flex;gap:10px}.mrow2>div{flex:1}
+.mbtns{display:flex;gap:10px;margin-top:18px}
+</style>
+<script>
+(function(){
+  fetch('/admin/api/auth-status').then(function(r){return r.json()}).then(function(j){
+    if(!j || !j.authorized){ location.href='/admin/login'; }
+  }).catch(function(){ location.href='/admin/login'; });
+})();
+</script>
+</head>
+<body>
+<div class="top">
+ <div class="logo">🦊</div>
+ <div class="ttl"><h1>Лис-А-Дом</h1><small>админка бронирований</small></div>
+ <div class="seg">
+  <button onclick="shift(-1)">‹</button>
+  <button class="cur" id="monthLabel">—</button>
+  <button onclick="shift(1)">›</button>
+ </div>
+ <button class="addbtn" onclick="openCreate()">+ Бронь</button>
+ <a class="logout" href="/admin/logout">⏻ Выйти</a>
+</div>
+<div class="kpis" id="stats"></div>
+<div class="row2">
+ <div class="card chartcard"><div class="chead">💰 Выручка по месяцам (подтверждённые и оплаченные)</div><div class="chart" id="chart"></div></div>
+ <div class="card chartcard"><div class="chead">📊 Статусы броней</div><div class="chips" id="statusChips"></div></div>
+</div>
+<div class="card gridcard">
+ <div class="ghead"><b>Календарь занятости</b>
+  <div class="legend">
+   <span><i style="background:#F6D3D3"></i>Авито закрыто</span>
+   <span><i style="background:#FFF3E0"></i>Заявка</span>
+   <span><i style="background:#E3F0FF"></i>Подтверждена</span>
+   <span><i style="background:#E4F8EB"></i>Залог оплачен</span>
+   <span><i style="background:#FFE9E9"></i>Отменена</span>
+  </div>
+ </div>
+ <div class="gridwrap"><table id="grid"></table></div>
+</div>
+<div id="details"></div>
+<div class="modal" id="modal">
+ <div class="mcard">
+  <h2>Новая бронь</h2>
+  <label>Имя гостя</label><input id="fName">
+  <label>Телефон</label><input id="fPhone">
+  <div class="mrow2">
+   <div><label>Заезд</label><input type="date" id="fIn"></div>
+   <div><label>Выезд</label><input type="date" id="fOut"></div>
+  </div>
+  <div class="mrow2">
+   <div><label>Гостей</label><input id="fGuests" value="2"></div>
+   <div><label>Сумма, ₽</label><input id="fTotal" type="number"></div>
+  </div>
+  <div class="mrow2">
+   <div><label>Статус</label><select id="fStatus"><option value="confirmed">Подтверждена</option><option value="pending">Заявка</option><option value="paid">Оплачена</option></select></div>
+   <div><label>Источник</label><select id="fSource"><option value="manual">Вручную</option><option value="avito">Авито</option><option value="max_app">MAX</option></select></div>
+  </div>
+  <div class="mbtns">
+   <button class="btn" style="background:#007AFF" onclick="createBooking()">Создать</button>
+   <button class="btn" style="background:#8E8E93" onclick="closeModal()">Отмена</button>
+  </div>
+ </div>
+</div>
+<script>
+let cur=new Date();let BOOKS=[];let AVITO=[];
+const MONTHS=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+const MD=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+function iso(y,m,d){return y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');}
+function nextDay(s){const d=new Date(s+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+1);return d.totoISOStringFix();}
+function prevDay(s){const d=new Date(s+'T00:00:00Z');d.setUTCDate(d.getUTCDate()-1);return d.toISOString().slice(0,10);}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/'/g,'&#39;');}
+function fd(s){if(!s)return '—';const p=String(s).split('-');return parseInt(p[2])+' '+MD[parseInt(p[1])-1]+' '+p[0];}
+function fdt(s){if(!s)return '—';const d=new Date(s);return fd(String(s).slice(0,10))+', '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
+async function load(){const [r1,r2]=await Promise.all([fetch('/admin/api/bookings'),fetch('/admin/api/avito')]);BOOKS=await r1.json();AVITO=await r2.json();render();}
+function shift(d){cur.setMonth(cur.getMonth()+d);render();}
+function avitoHit(t){return (Array.isArray(AVITO)?AVITO:[]).find(ev=>t>=ev.start&&t<ev.end);}
+function hideDetails(){document.getElementById('details').style.display='none';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();hideDetails();}});
+function render(){
+ const y=cur.getFullYear(),m=cur.getMonth();
+ document.getElementById('monthLabel').textContent=MONTHS[m]+' '+y;
+ const days=new Date(y,m+1,0).getDate();
+ const today=new Date();const tISO=iso(today.getFullYear(),today.getMonth(),today.getDate());
+ let head='<tr><th style="min-width:220px;text-align:left;padding-left:14px">Канал / Гость</th>';
+ for(let d=1;d<=days;d++){const wd=new Date(y,m,d).getDay();head+='<th class="'+((wd===0||wd===6)?'we ':'')+(iso(y,m,d)===tISO?'today':'')+'">'+d+'</th>';}
+ head+='</tr>';
+ let av='<tr><td class="name" style="cursor:default"><b>🔒 Авито (закрыто)</b><small>синхронизация каждые 10 мин</small></td>';
+ for(let d=1;d<=days;d++){const t=iso(y,m,d);const wd=new Date(y,m,d).getDay();const hit=avitoHit(t);av+='<td class="'+(hit?'b-avito first last':'c'+((wd===0||wd===6)?' we':'')+(t===tISO?' today':''))+'" style="'+(hit?'':'cursor:default')+'" title="'+(hit?esc(hit.summary):'')+'"></td>';}
+ av+='</tr>';
+ const lastDay=iso(y,m,days);
+ const list=BOOKS.filter(b=>b.checkOut>iso(y,m,1)&&b.checkIn<=lastDay).sort((a,b)=>a.checkIn.localeCompare(b.checkIn));
+ let rows='';
+ list.forEach(b=>{
+  rows+='<tr><td class="name" onclick="show(\''+b.id+'\')"><b>'+esc(b.name||'—')+'</b><small>'+b.id+' · '+b.checkIn.slice(8,10)+'.'+b.checkIn.slice(5,7)+' → '+b.checkOut.slice(8,10)+'.'+b.checkOut.slice(5,7)+'</small></td>';
+  for(let d=1;d<=days;d++){
+   const t=iso(y,m,d);const wd=new Date(y,m,d).getDay();
+   let cls='c'+((wd===0||wd===6)?' we':'')+(t===tISO?' today':'');
+   if(t>=b.checkIn&&t<b.checkOut){cls='b-'+(b.status||'pending');if(t===b.checkIn)cls+=' first';if(t===prevDay(b.checkOut))cls+=' last';}
+   rows+='<td class="'+cls+'" onclick="cellClick(this,\''+t+'\')"></td>';
+  }
+  rows+='</tr>';
+ });
+ document.getElementById('grid').innerHTML=head+av+rows;
+ const paid=list.filter(b=>b.status==='paid'||b.status==='confirmed');
+ const nights=paid.reduce((s,b)=>s+(Number(b.nights)||0),0);
+ const sum=paid.reduce((s,b)=>s+(Number(b.total)||0),0);
+ const occ=new Set();paid.forEach(b=>{let t=b.checkIn;while(t<b.checkOut){occ.add(t);t=nextDay(t);}});
+ let inMonth=0;for(let d=1;d<=days;d++){if(occ.has(iso(y,m,d)))inMonth++;}
+ const avDays=new Set();for(let d=1;d<=days;d++){if(avitoHit(iso(y,m,d)))avDays.add(iso(y,m,d));}
+ document.getElementById('stats').innerHTML=
+ '<div class="card kpi"><div class="kicon" style="background:#E3F0FF">📅</div><div><b>'+list.length+'</b><span>броней в '+MONTHS[m].toLowerCase()+'</span></div></div>'+
+ '<div class="card kpi"><div class="kicon" style="background:#E4F8EB">🌙</div><div><b>'+nights+'</b><span>ночей продано</span></div></div>'+
+ '<div class="card kpi"><div class="kicon" style="background:#FFF3E0">💰</div><div><b>'+sum.toLocaleString('ru-RU')+' ₽</b><span>выручка месяца</span></div></div>'+
+ '<div class="card kpi"><div class="kicon" style="background:#F3E8FF">📈</div><div><b>'+Math.round(inMonth/days*100)+'%</b><span>загрузка</span></div></div>'+
+ '<div class="card kpi"><div class="kicon" style="background:#FFE9E9">🔒</div><div><b>'+avDays.size+'</b><span>дней закрыто на Авито</span></div></div>';
+ renderAnalytics();
+}
+function renderAnalytics(){
+ const now=new Date();let data=[];
+ for(let i=5;i>=0;i--){
+  const d=new Date(now.getFullYear(),now.getMonth()-i,1);
+  const key=iso(d.getFullYear(),d.getMonth(),1).slice(0,7);
+  const bs=BOOKS.filter(b=>(b.status==='paid'||b.status==='confirmed')&&String(b.checkIn||'').slice(0,7)===key);
+  data.push({m:d.getMonth(),sum:bs.reduce((s,b)=>s+(Number(b.total)||0),0),n:bs.length});
+ }
+ const max=Math.max.apply(null,data.map(x=>x.sum).concat([1]));
+ document.getElementById('chart').innerHTML=data.map(x=>'<div class="col" title="'+x.n+' броней · '+x.sum.toLocaleString('ru-RU')+' ₽"><b>'+(x.sum?Math.round(x.sum/1000)+'к':'')+'</b><div class="bar" style="height:'+Math.max(4,Math.round(x.sum/max*80))+'px"></div><span>'+MD[x.m]+'</span></div>').join('');
+ const cnt=(s,c,l)=>'<div class="chip"><i class="dot" style="background:'+c+'"></i>'+l+'<b>'+BOOKS.filter(b=>(b.status||'pending')===s).length+'</b></div>';
+ document.getElementById('statusChips').innerHTML=cnt('pending','#FF9F0A','Заявки')+cnt('confirmed','#007AFF','Подтверждённые')+cnt('paid','#34C759','Оплаченные')+cnt('cancelled','#FF3B30','Отменённые')+cnt('rejected','#FF3B30','Отклонённые');
+}
+function cellClick(el,t){if(!el.className.includes(' c'))return;openCreate(t);}
+function openCreate(t){document.getElementById('modal').classList.add('open');if(t){document.getElementById('fIn').value=t;document.getElementById('fOut').value=nextDay(t);}}
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+async function createBooking(){
+ const body={name:document.getElementById('fName').value,phone:document.getElementById('fPhone').value,checkIn:document.getElementById('fIn').value,checkOut:document.getElementById('fOut').value,guests:document.getElementById('fGuests').value,total:document.getElementById('fTotal').value,status:document.getElementById('fStatus').value,source:document.getElementById('fSource').value};
+ const r=await fetch('/admin/api/create',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+ const d=await r.json();
+ if(d.ok){closeModal();load();}else{alert('Ошибка: '+(d.error||'неверные данные'));}
+}
+function show(id){
+ const b=BOOKS.find(x=>x.id===id);if(!b)return;
+ const st=b.status||'pending';
+ const PILL={pending:['#FF9F0A','Заявка'],confirmed:['#007AFF','Подтверждена'],paid:['#34C759','Залог оплачен'],cancelled:['#FF3B30','Отменена'],rejected:['#FF3B30','Отклонена']};
+ const pl=PILL[st]||PILL.pending;
+ const CH={max_app:'MAX (мини-приложение)',manual:'Вручную (телефон)',avito:'Авито'};
+ let btns='';
+ if(st==='pending')btns+='<button class="btn" style="background:#34C759" onclick="setStatus(\''+b.id+'\',\'confirmed\')">✅ Подтвердить</button><button class="btn" style="background:#FF3B30" onclick="setStatus(\''+b.id+'\',\'rejected\')">❌ Отклонить</button>';
+ else if(st==='confirmed')btns+='<a class="btn" style="background:#34C759" href="/api/act/paid/'+encodeURIComponent(b.id)+'" target="_blank">💰 Оплачено вручную</a><button class="btn" style="background:#FF3B30" onclick="setStatus(\''+b.id+'\',\'cancelled\')">❌ Отменить</button>';
+ else if(st==='paid')btns+='<a class="btn" style="background:#8E8E93" href="/api/act/refund/'+encodeURIComponent(b.id)+'" target="_blank">💸 Возврат залога</a><a class="btn" style="background:#8E8E93" href="/api/act/refund/'+encodeURIComponent(b.id)+'/manual" target="_blank">🧾 Частичный</a><button class="btn" style="background:#FF3B30" onclick="setStatus(\''+b.id+'\',\'cancelled\')">❌ Отменить</button>';
+ else btns+='<button class="btn" style="background:#007AFF" onclick="setStatus(\''+b.id+'\',\'pending\')">🔄 Вернуть в заявки</button>';
+ if(b.paymentUrl)btns+='<a class="btn" style="background:#007AFF" href="'+b.paymentUrl+'" target="_blank">💳 Ссылка на оплату</a>';
+ const row=(l,v)=>'<div class="row"><span>'+l+'</span><b>'+v+'</b></div>';
+ const sec=t=>'<div class="sec">'+t+'</div>';
+ document.getElementById('details').innerHTML='<div class="card dcard">'+
+ '<div class="dhead"><div><h2>'+esc(b.name||'—')+'</h2><div class="dsub">'+b.id+' · забронировано '+fdt(b.created)+'</div></div>'+
+ '<div style="display:flex;gap:10px;align-items:center"><span class="pill" style="background:'+pl[0]+'">'+pl[1]+'</span><button class="close" title="Закрыть" onclick="hideDetails()">✕</button></div></div>'+
+ '<div class="dgrid"><div>'+
+ sec('ГОСТЬ')+
+ row('Телефон','<a href="tel:'+esc(b.phone||'')+'" style="color:#007AFF;text-decoration:none">'+esc(b.phone||'—')+'</a>')+
+ row('Канал бронирования',CH[b.source]||b.source||'MAX')+
+ row('Гостей',esc(b.guests||'—'))+
+ (b.comment?row('Комментарий',esc(b.comment)):'')+
+ sec('ПРОЖИВАНИЕ')+
+ row('Заезд',fd(b.checkIn)+', с 15:00')+
+ row('Выезд',fd(b.checkOut)+', до 12:00')+
+ row('Ночей',b.nights||1)+
+ '</div><div>'+
+ sec('ОПЛАТА')+
+ row('Стоимость',Number(b.total||0).toLocaleString('ru-RU')+' ₽')+
+ (b.paidAt?'<div class="box ok">💰 Залог внесён · 10 000 ₽ · '+fd(String(b.paidAt).slice(0,10))+'</div>':'<div class="box no">⚠️ Залог ещё не внесён</div>')+
+ (b.refundedAt?row('Возврат',Number(b.refundedAmount||0).toLocaleString('ru-RU')+' ₽ · '+fd(String(b.refundedAt).slice(0,10))):'')+
+ '</div></div>'+
+ '<div class="btns">'+btns+'</div></div>';
+ document.getElementById('details').style.display='block';
+ document.getElementById('details').scrollIntoView({behavior:'smooth'});
+}
+async function setStatus(id,status){
+ await fetch('/admin/api/status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id,status:status})});
+ await load();show(id);
+}
+load();
+</script>
+<a href="/pma/" target="_blank" rel="noopener" title="База данных" style="position:fixed;bottom:6px;left:8px;font-size:10px;line-height:1;color:rgba(128,128,128,.35);text-decoration:none;z-index:9999;font-family:ui-monospace,monospace;letter-spacing:1px">db</a>
+<script>
+(function autoLogout(){
+  var TIMEOUT = 12 * 60 * 60 * 1000; // 12 часов
+  var WARN_BEFORE = 5 * 60 * 1000;   // предупреждение за 5 минут
+  var timer, warnTimer;
+  function reset(){
+    clearTimeout(timer); clearTimeout(warnTimer);
+    var w = document.getElementById('autologout-warn');
+    if(w) w.style.display='none';
+    warnTimer = setTimeout(function(){
+      var w = document.getElementById('autologout-warn');
+      if(w) w.style.display='flex';
+    }, TIMEOUT - WARN_BEFORE);
+    timer = setTimeout(function(){
+      fetch('/admin/logout').then(function(){ location.href='/admin/login'; });
+    }, TIMEOUT);
+  }
+  ['mousemove','keydown','click','scroll','touchstart'].forEach(function(e){
+    document.addEventListener(e, reset, {passive:true});
+  });
+  // плашка предупреждения
+  if(!document.getElementById('autologout-warn')){
+    var d = document.createElement('div');
+    d.id='autologout-warn';
+    d.style.cssText='display:none;position:fixed;top:20px;right:20px;background:#FEF3C7;border:2px solid #F59E0B;color:#78350F;padding:14px 20px;border-radius:12px;font-size:14px;font-weight:600;z-index:99999;box-shadow:0 10px 30px rgba(0,0,0,.15)';
+    d.innerHTML='⏳ Сессия истекает через 5 минут<br><small>Двигай мышкой чтобы продлить</small>';
+    document.body.appendChild(d);
+  }
+  reset();
+})();
+</script>
+</body>
+</html>
+<style>
+:root{--bg:#0b0b0c;--card:#1C1C1E;--text:#F5F5F7;--mut:#98989D;--mut2:#AEAEB2;--line:rgba(255,255,255,.10);--blue:#0A84FF;--green:#30D158;--orange:#FF9F0A;--red:#FF453A}
+body{background:radial-gradient(1200px 600px at 20% -10%,#3a2417 0%,#131315 55%,#0b0b0c 100%)}
+.card{background:rgba(28,28,30,.92);border-color:rgba(255,255,255,.08);box-shadow:0 8px 28px rgba(0,0,0,.4)}
+.seg{background:rgba(120,120,128,.24)}
+.seg button{color:#F5F5F7}
+.seg .cur{background:#2C2C2E;color:#F5F5F7;box-shadow:0 1px 4px rgba(0,0,0,.5)}
+.addbtn{background:linear-gradient(135deg,#E8914F,#C86B2E);box-shadow:0 3px 12px rgba(232,145,79,.35)}
+.addbtn:hover{filter:brightness(1.05);background:linear-gradient(135deg,#E8914F,#C86B2E)}
+.kpis .kpi:nth-child(1) .kicon{background:rgba(10,132,255,.18)!important}
+.kpis .kpi:nth-child(2) .kicon{background:rgba(48,209,88,.18)!important}
+.kpis .kpi:nth-child(3) .kicon{background:rgba(255,159,10,.18)!important}
+.kpis .kpi:nth-child(4) .kicon{background:rgba(191,90,242,.18)!important}
+.kpis .kpi:nth-child(5) .kicon{background:rgba(255,69,58,.18)!important}
+.col .bar{background:linear-gradient(180deg,#E8914F,#C86B2E)}
+.col b{color:#AEAEB2}
+.col span{color:#98989D}
+.legend span:nth-child(1) i{background:#8E3A3A!important}
+.legend span:nth-child(2) i{background:#6E6E73!important}
+.legend span:nth-child(3) i{background:#E8914F!important}
+.legend span:nth-child(4) i{background:#30D158!important}
+.legend span:nth-child(5) i{background:#FF453A!important}
+thead th.today{background:#E8914F;color:#1C1C1E}
+td.c{border-color:rgba(255,255,255,.05)}
+td.c.we{background:rgba(255,255,255,.03)}
+td.c.today{background:rgba(232,145,79,.15)}
+td.c:hover{background:rgba(255,255,255,.08)}
+td.name:hover{background:rgba(255,255,255,.05)}
+td.b-pending{background:rgba(142,142,147,.35);box-shadow:inset 0 0 0 1px rgba(174,174,178,.4)}
+td.b-confirmed{background:rgba(232,145,79,.45);box-shadow:inset 0 0 0 1px rgba(232,145,79,.6)}
+td.b-paid{background:rgba(48,209,88,.35);box-shadow:inset 0 0 0 1px rgba(48,209,88,.55)}
+td.b-cancelled,td.b-rejected{background:rgba(255,69,58,.35);box-shadow:inset 0 0 0 1px rgba(255,69,58,.5)}
+td.b-avito{background:repeating-linear-gradient(45deg,#8E3A3A,#8E3A3A 4px,#6E2C2C 4px,#6E2C2C 8px)}
+.box.ok{background:rgba(48,209,88,.12);border-color:rgba(48,209,88,.45);color:#30D158}
+.box.no{background:rgba(255,159,10,.12);border-color:rgba(255,159,10,.45);color:#FF9F0A}
+.close{background:rgba(255,255,255,.08);color:#AEAEB2}
+.close:hover{background:rgba(255,69,58,.15);color:#FF453A}
+.modal{background:rgba(0,0,0,.6)}
+.mcard{background:#1C1C1E;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.mcard input,.mcard select{background:#2C2C2E;border-color:rgba(255,255,255,.15);color:#F5F5F7}
+.gridwrap{border-top-color:rgba(255,255,255,.08)}
+</style>
+<script>
+/* === Модуль цен в админке === */
+(function(){
+ const btn=document.querySelector('.top .addbtn');
+ if(btn) btn.insertAdjacentHTML('afterend','<button class="addbtn" style="background:#2C2C2E;border:1px solid rgba(255,255,255,.15);box-shadow:none" onclick="openPrices()">💰 Цены</button>');
+ const md=document.createElement('div');md.className='modal';md.id='priceModal';
+ md.innerHTML='<div class="mcard" style="max-width:560px"><h2>💰 Цены и периоды</h2><div id="priceList" style="max-height:220px;overflow:auto;margin-bottom:10px"></div>'+
+ '<label>Новый период</label><div class="mrow2"><div><input type="date" id="pStart"></div><div><input type="date" id="pEnd"></div></div>'+
+ '<div class="mrow2"><div><label>Цена за ночь, ₽</label><input type="number" id="pPrice" value="6000"></div><div><label>Мин. ночей</label><input type="number" id="pMin" value="1"></div></div>'+
+ '<label>Название (выходные, Новый год...)</label><input id="pLabel">'+
+ '<div class="mbtns"><button class="btn" style="background:#007AFF" onclick="savePriceUI()">Сохранить период</button><button class="btn" style="background:#8E8E93" onclick="closePrices()">Закрыть</button></div>'+
+ '<div style="margin-top:16px;border-top:1px solid rgba(255,255,255,.1);padding-top:12px"><div class="mrow2"><div><label>Базовая цена, ₽/ночь</label><input type="number" id="sBase"></div><div><label>Залог, ₽</label><input type="number" id="sDep"></div></div>'+
+ '<button class="btn" style="background:#34C759;margin-top:10px" onclick="saveSettingsUI()">Сохранить настройки</button></div></div>';
+ document.body.appendChild(md);
+ window.openPrices=async function(){
+  md.classList.add('open');
+  const r=await fetch('/admin/api/prices');const d=await r.json();
+  document.getElementById('sBase').value=d.settings.base_price||6000;
+  document.getElementById('sDep').value=d.settings.deposit||10000;
+  document.getElementById('priceList').innerHTML=d.prices.length?d.prices.map(p=>'<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(255,255,255,.1);border-radius:10px;margin-bottom:6px;font-size:13px"><b style="min-width:170px">'+String(p.date_start).slice(0,10)+' → '+String(p.date_end).slice(0,10)+'</b><span>'+Number(p.price_per_night).toLocaleString('ru-RU')+' ₽/ночь</span><span style="color:#98989D">'+(p.label||'')+'</span><button class="btn" style="margin-left:auto;background:#FF453A;padding:6px 10px;font-size:12px" onclick="delPrice('+p.id+')">✕</button></div>').join(''):'<div style="color:#98989D;font-size:13px">Периодов нет — действует базовая цена</div>';
+ };
+ window.closePrices=function(){md.classList.remove('open');};
+ window.delPrice=async function(id){if(!confirm('Удалить период?'))return;await fetch('/admin/api/prices/delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id})});openPrices();};
+ window.savePriceUI=async function(){
+  const body={date_start:document.getElementById('pStart').value,date_end:document.getElementById('pEnd').value,price_per_night:document.getElementById('pPrice').value,min_nights:document.getElementById('pMin').value,label:document.getElementById('pLabel').value};
+  const r=await fetch('/admin/api/prices',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const d=await r.json();
+  if(d.ok){document.getElementById('pLabel').value='';openPrices();}else{alert('Ошибка: '+(d.error||''));}
+ };
+ window.saveSettingsUI=async function(){
+  await fetch('/admin/api/settings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:'base_price',v:document.getElementById('sBase').value})});
+  await fetch('/admin/api/settings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:'deposit',v:document.getElementById('sDep').value})});
+  alert('Сохранено');
+ };
+})();
+</script>
+<script>
+/* === Редактор цен v2: календарь + крестик === */
+(function(){
+ const md=document.getElementById('priceModal');
+ if(!md) return;
+ const st=document.createElement('style');
+ st.textContent='.pcal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:10px 0}'+
+ '.pcd{border-radius:8px;padding:6px 2px;text-align:center;cursor:pointer;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06)}'+
+ '.pcd b{display:block;font-size:12px}.pcd span{display:block;font-size:10px;color:#98989D}'+
+ '.pcd.ov{background:rgba(232,145,79,.25);border-color:rgba(232,145,79,.5)}.pcd.ov span{color:#E8914F}'+
+ '.pcd.sel{outline:2px solid #0A84FF}'+
+ '.phead{display:flex;align-items:center;justify-content:space-between;gap:10px}'+
+ '.pnav{background:rgba(255,255,255,.08);border:none;color:#F5F5F7;border-radius:8px;padding:4px 10px;cursor:pointer}';
+ document.head.appendChild(st);
+ let PM={y:new Date().getFullYear(),m:new Date().getMonth(),prices:[],settings:{},selStart:'',selEnd:''};
+ const MDN=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+ const iso=(y,m,d)=>y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+ function priceOf(d){const p=PM.prices.find(x=>String(x.date_start).slice(0,10)<=d&&String(x.date_end).slice(0,10)>=d);return p?Number(p.price_per_night):Number(PM.settings.base_price||6000);}
+ function renderCal(){
+  const el=document.getElementById('priceCal');if(!el)return;
+  const days=new Date(PM.y,PM.m+1,0).getDate();
+  let h='<div class="phead"><button class="pnav" onclick="pcNav(-1)">‹</button><b>'+MDN[PM.m]+' '+PM.y+'</b><button class="pnav" onclick="pcNav(1)">›</button></div><div class="pcal">';
+  for(let d=1;d<=days;d++){
+   const ds=iso(PM.y,PM.m,d);const pr=priceOf(ds);
+   const ov=PM.prices.some(x=>String(x.date_start).slice(0,10)<=ds&&String(x.date_end).slice(0,10)>=ds);
+   const sel=PM.selStart&&ds>=PM.selStart&&(!PM.selEnd?ds===PM.selStart:ds<=PM.selEnd);
+   h+='<div class="pcd'+(ov?' ov':'')+(sel?' sel':'')+'" onclick="pcPick(\''+ds+'\')"><b>'+d+'</b><span>'+Math.round(pr/1000)+'к</span></div>';
+  }
+  el.innerHTML=h+'</div><div style="font-size:11px;color:#98989D;margin-bottom:8px">Цены за ночь в тысячах (24к = 24 000 ₽). Оранжевые — особые периоды. Нажмите дату начала, затем дату конца — даты подставятся в форму ниже.</div>';
+ }
+ window.pcNav=function(d){PM.m+=d;if(PM.m<0){PM.m=11;PM.y--;}if(PM.m>11){PM.m=0;PM.y++;}renderCal();};
+ window.pcPick=function(d){
+  if(!PM.selStart||(PM.selStart&&PM.selEnd)){PM.selStart=d;PM.selEnd='';}
+  else if(d<PM.selStart){PM.selStart=d;}
+  else{PM.selEnd=d;}
+  document.getElementById('pStart').value=PM.selStart;
+  document.getElementById('pEnd').value=PM.selEnd||PM.selStart;
+  renderCal();
+ };
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')closePrices();});
+ window.openPrices=async function(){
+  md.classList.add('open');
+  const r=await fetch('/admin/api/prices');const d=await r.json();
+  PM.prices=d.prices||[];PM.settings=d.settings||{};PM.selStart='';PM.selEnd='';
+  md.querySelector('.mcard').innerHTML=
+   '<div class="phead"><h2 style="margin:0">💰 Цены и периоды</h2><button class="close" title="Закрыть" onclick="closePrices()">✕</button></div>'+
+   '<div id="priceCal"></div>'+
+   '<div id="priceList" style="max-height:160px;overflow:auto;margin-bottom:10px"></div>'+
+   '<label>Новый период</label><div class="mrow2"><div><input type="date" id="pStart"></div><div><input type="date" id="pEnd"></div></div>'+
+   '<div class="mrow2"><div><label>Цена за ночь, ₽</label><input type="number" id="pPrice" value="6000"></div><div><label>Мин. ночей</label><input type="number" id="pMin" value="1"></div></div>'+
+   '<label>Название (выходные, Новый год...)</label><input id="pLabel">'+
+   '<div class="mbtns"><button class="btn" style="background:#007AFF" onclick="savePriceUI()">Сохранить период</button></div>'+
+   '<div style="margin-top:16px;border-top:1px solid rgba(255,255,255,.1);padding-top:12px"><div class="mrow2"><div><label>Базовая цена, ₽/ночь</label><input type="number" id="sBase"></div><div><label>Залог, ₽</label><input type="number" id="sDep"></div></div>'+
+   '<button class="btn" style="background:#34C759;margin-top:10px" onclick="saveSettingsUI()">Сохранить настройки</button></div>';
+  document.getElementById('sBase').value=PM.settings.base_price||6000;
+  document.getElementById('sDep').value=PM.settings.deposit||10000;
+  renderCal();
+  document.getElementById('priceList').innerHTML=PM.prices.length?PM.prices.map(p=>'<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(255,255,255,.1);border-radius:10px;margin-bottom:6px;font-size:13px"><b style="min-width:170px">'+String(p.date_start).slice(0,10)+' → '+String(p.date_end).slice(0,10)+'</b><span>'+Number(p.price_per_night).toLocaleString('ru-RU')+' ₽/ночь</span><span style="color:#98989D">'+(p.label||'')+'</span><button class="btn" style="margin-left:auto;background:#FF453A;padding:6px 10px;font-size:12px" onclick="delPrice('+p.id+')">✕</button></div>').join(''):'<div style="color:#98989D;font-size:13px">Периодов нет — действует базовая цена</div>';
+ };
+})();
+</script>
+<style>
+#priceModal .mcard{max-width:680px;width:calc(100% - 32px);max-height:92vh;overflow-y:auto}
+.modal .mcard{max-height:92vh;overflow-y:auto}
+</style>
+<script>
+/* === Редактор цен v3: широкое окно, дни недели, выходные и праздники === */
+(function(){
+ const md=document.getElementById('priceModal');
+ if(!md) return;
+ const st=document.createElement('style');
+ st.textContent=
+ '#priceModal .mcard{max-width:760px!important;width:calc(100% - 32px)!important;max-height:92vh;overflow-y:auto;padding:28px 30px}'+
+ '.pcd.ov{background:rgba(232,145,79,.25)!important;border-color:rgba(232,145,79,.5)!important}'+
+ '.pcd.ov span{color:#E8914F!important}'+
+ '.phead2{display:flex;align-items:center;justify-content:center;gap:14px;margin:16px 0 10px}'+
+ '.pwd{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}'+
+ '.pwd span{text-align:center;font-size:10px;color:#98989D;font-weight:700}'+
+ '.pwd span.we{color:#FF9F0A}'+
+ '.pcd.we{background:rgba(255,159,10,.10);border-color:rgba(255,159,10,.25)}'+
+ '.pcd.hol{background:rgba(191,90,242,.14);border-color:rgba(191,90,242,.35)}'+
+ '.pcd.hol span{color:#BF5AF2}'+
+ '.plegend{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:#98989D;margin-top:8px}'+
+ '.plegend i{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:5px}';
+ document.head.appendChild(st);
+ const HOLS=['01-01','01-02','01-03','01-04','01-05','01-06','01-07','01-08','02-23','03-08','05-01','05-09','06-12','11-04'];
+ const WD=['ПН','ВТ','СР','ЧТ','ПТ','СБ','ВС'];
+ let PM={y:new Date().getFullYear(),m:new Date().getMonth(),prices:[],settings:{},selStart:'',selEnd:''};
+ const MDN=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+ const iso=(y,m,d)=>y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+ function periodOf(d){return PM.prices.find(x=>String(x.date_start).slice(0,10)<=d&&String(x.date_end).slice(0,10)>=d);}
+ function renderCal(){
+  const el=document.getElementById('priceCal');if(!el)return;
+  const days=new Date(PM.y,PM.m+1,0).getDate();
+  const offset=(new Date(PM.y,PM.m,1).getDay()+6)%7;
+  let h='<div class="phead2"><button class="pnav" onclick="pcNav(-1)">‹</button><b style="min-width:120px;text-align:center">'+MDN[PM.m]+' '+PM.y+'</b><button class="pnav" onclick="pcNav(1)">›</button></div>';
+  h+='<div class="pwd">'+WD.map((w,i)=>'<span class="'+(i>4?'we':'')+'">'+w+'</span>').join('')+'</div>';
+  h+='<div class="pcal">';
+  for(let i=0;i<offset;i++)h+='<div></div>';
+  for(let d=1;d<=days;d++){
+   const ds=iso(PM.y,PM.m,d);const wd=new Date(PM.y,PM.m,d).getDay();
+   const isWe=(wd===0||wd===6);const isHol=HOLS.includes(ds.slice(5));
+   const pr=periodOf(ds);const price=pr?Number(pr.price_per_night):Number(PM.settings.base_price||6000);
+   const sel=PM.selStart&&ds>=PM.selStart&&(!PM.selEnd?ds===PM.selStart:ds<=PM.selEnd);
+   h+='<div class="pcd'+(pr?' ov':'')+(isWe?' we':'')+(isHol?' hol':'')+(sel?' sel':'')+'" onclick="pcPick(\''+ds+'\')"><b>'+d+'</b><span>'+Math.round(price/1000)+'к</span></div>';
+  }
+  el.innerHTML=h+'</div>'+
+  '<div class="plegend"><span><i style="background:rgba(255,159,10,.35)"></i>выходные</span><span><i style="background:rgba(191,90,242,.4)"></i>праздники РФ</span><span><i style="background:rgba(232,145,79,.6)"></i>особый период</span><span><i style="background:#0A84FF"></i>выбрано</span></div>'+
+  '<div style="font-size:11px;color:#98989D;margin-top:6px">Цены за ночь в тысячах (24к = 24 000 ₽). Нажмите дату начала, затем дату конца — они подставятся в форму ниже.</div>';
+ }
+ window.pcNav=function(d){PM.m+=d;if(PM.m<0){PM.m=11;PM.y--;}if(PM.m>11){PM.m=0;PM.y++;}renderCal();};
+ window.pcPick=function(d){
+  if(!PM.selStart||(PM.selStart&&PM.selEnd)){PM.selStart=d;PM.selEnd='';}
+  else if(d<PM.selStart){PM.selStart=d;}
+  else{PM.selEnd=d;}
+  document.getElementById('pStart').value=PM.selStart;
+  document.getElementById('pEnd').value=PM.selEnd||PM.selStart;
+  renderCal();
+ };
+ window.openPrices=async function(){
+  md.classList.add('open');
+  const r=await fetch('/admin/api/prices');const d=await r.json();
+  PM.prices=d.prices||[];PM.settings=d.settings||{};PM.selStart='';PM.selEnd='';
+  md.querySelector('.mcard').innerHTML=
+   '<div class="phead"><h2 style="margin:0">💰 Цены и периоды</h2><button class="close" title="Закрыть" onclick="closePrices()">✕</button></div>'+
+   '<div id="priceCal"></div>'+
+   '<div id="priceList" style="max-height:160px;overflow:auto;margin-bottom:10px"></div>'+
+   '<label>Новый период</label><div class="mrow2"><div><input type="date" id="pStart"></div><div><input type="date" id="pEnd"></div></div>'+
+   '<div class="mrow2"><div><label>Цена за ночь, ₽</label><input type="number" id="pPrice" value="6000"></div><div><label>Мин. ночей</label><input type="number" id="pMin" value="1"></div></div>'+
+   '<label>Название (выходные, Новый год...)</label><input id="pLabel">'+
+   '<div class="mbtns"><button class="btn" style="background:#007AFF" onclick="savePriceUI()">Сохранить период</button></div>'+
+   '<div style="margin-top:16px;border-top:1px solid rgba(255,255,255,.1);padding-top:12px"><div class="mrow2"><div><label>Базовая цена, ₽/ночь</label><input type="number" id="sBase"></div><div><label>Залог, ₽</label><input type="number" id="sDep"></div></div>'+
+   '<button class="btn" style="background:#34C759;margin-top:10px" onclick="saveSettingsUI()">Сохранить настройки</button></div>';
+  document.getElementById('sBase').value=PM.settings.base_price||6000;
+  document.getElementById('sDep').value=PM.settings.deposit||10000;
+  renderCal();
+  document.getElementById('priceList').innerHTML=PM.prices.length?PM.prices.map(p=>'<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid rgba(255,255,255,.1);border-radius:10px;margin-bottom:6px;font-size:13px"><b style="min-width:170px">'+String(p.date_start).slice(0,10)+' → '+String(p.date_end).slice(0,10)+'</b><span>'+Number(p.price_per_night).toLocaleString('ru-RU')+' ₽/ночь</span><span style="color:#98989D">'+(p.label||'')+'</span><button class="btn" style="margin-left:auto;background:#FF453A;padding:6px 10px;font-size:12px" onclick="delPrice('+p.id+')">✕</button></div>').join(''):'<div style="color:#98989D;font-size:13px">Периодов нет — действует базовая цена</div>';
+ };
+})();
+</script>
+<style>
+#priceModal .mcard{max-width:90%!important;width:90%!important}
+</style>
+<script>
+/* === v4: модальная новая бронь + карточка брони в модалке === */
+(function(){
+ const st=document.createElement('style');
+ st.textContent='#modal .mcard{max-width:640px!important;width:calc(100% - 32px)!important;max-height:92vh;overflow-y:auto;padding:26px 28px}'+
+ '#bookModal .mcard{max-width:760px!important;width:calc(100% - 32px)!important;max-height:92vh;overflow-y:auto;padding:26px 28px}'+
+ '.mrow3{display:flex;gap:10px}.mrow3>div{flex:1}';
+ document.head.appendChild(st);
+ const bm=document.createElement('div');bm.className='modal';bm.id='bookModal';
+ bm.innerHTML='<div class="mcard"></div>';
+ document.body.appendChild(bm);
+ window.closeBook=function(){bm.classList.remove('open');};
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeBook();}});
+ window.openCreate=function(t){
+  const md=document.getElementById('modal');
+  md.querySelector('.mcard').innerHTML=
+   '<div class="phead"><h2 style="margin:0">📅 Новая бронь</h2><button class="close" onclick="closeModal()">✕</button></div>'+
+   '<div class="sec">ГОСТЬ</div>'+
+   '<div class="mrow2"><div><label>Имя</label><input id="fName"></div><div><label>Телефон</label><input id="fPhone"></div></div>'+
+   '<div class="sec">ДАТЫ</div>'+
+   '<div class="mrow3"><div><label>Заезд</label><input type="date" id="fIn"></div><div><label>Выезд</label><input type="date" id="fOut"></div><div><label>Ночей</label><input id="fNights" disabled placeholder="—"></div></div>'+
+   '<div class="sec">ЦЕНА И СТАТУС</div>'+
+   '<div class="mrow2"><div><label>Гостей</label><input id="fGuests" value="2"></div><div><label>Сумма, ₽</label><input id="fTotal" type="number"></div></div>'+
+   '<div class="mrow2"><div><label>Статус</label><select id="fStatus"><option value="confirmed">Подтверждена</option><option value="pending">Заявка</option><option value="paid">Оплачена</option></select></div><div><label>Источник</label><select id="fSource"><option value="manual">Вручную</option><option value="avito">Авито</option><option value="max_app">MAX</option></select></div></div>'+
+   '<div class="mbtns"><button class="btn" style="background:#007AFF" onclick="createBooking()">Сохранить бронь</button><button class="btn" style="background:#8E8E93" onclick="closeModal()">Отмена</button></div>';
+  md.classList.add('open');
+  if(t){document.getElementById('fIn').value=t;document.getElementById('fOut').value=nextDay(t);}
+  const recalc=async()=>{
+   const f=document.getElementById('fIn').value,o=document.getElementById('fOut').value;
+   if(!f||!o||f>=o){document.getElementById('fNights').value='';return;}
+   try{
+    const r=await fetch('/api/prices?from='+f+'&to='+o);const j=await r.json();
+    if(j&&j.total!=null){document.getElementById('fTotal').value=j.total;document.getElementById('fNights').value=j.nights.length;}
+   }catch(e){}
+  };
+  document.getElementById('fIn').onchange=recalc;
+  document.getElementById('fOut').onchange=recalc;
+  recalc();
+ };
+ window.cellClick=function(el,t){
+  if(el.className.includes(' c')){openCreate(t);return;}
+  const b=BOOKS.find(x=>x.checkIn<=t&&t<x.checkOut);
+  if(b)show(b.id);
+ };
+ const PILL={pending:['#FF9F0A','Заявка'],confirmed:['#007AFF','Подтверждена'],paid:['#34C759','Залог оплачен'],cancelled:['#FF3B30','Отменена'],rejected:['#FF3B30','Отклонена']};
+ const CH={max_app:'MAX (мини-приложение)',manual:'Вручную (телефон)',avito:'Авито'};
+ const MD2=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+ const fd2=s=>{if(!s)return '—';const p=String(s).split('-');return parseInt(p[2])+' '+MD2[parseInt(p[1])-1]+' '+p[0];};
+ const fdt2=s=>{if(!s)return '—';const d=new Date(s);return fd2(String(s).slice(0,10))+', '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');};
+ window.show=function(id){
+  const b=BOOKS.find(x=>x.id===id);if(!b)return;
+  const stt=b.status||'pending';const pl=PILL[stt]||PILL.pending;
+  let btns='';
+  if(stt==='pending')btns+='<button class="btn" style="background:#34C759" onclick="setStatus(\''+b.id+'\',\'confirmed\')">✅ Подтвердить</button><button class="btn" style="background:#FF3B30" onclick="setStatus(\''+b.id+'\',\'rejected\')">❌ Отклонить</button>';
+  else if(stt==='confirmed')btns+='<a class="btn" style="background:#34C759" href="/api/act/paid/'+encodeURIComponent(b.id)+'" target="_blank">💰 Оплачено вручную</a><button class="btn" style="background:#FF3B30" onclick="setStatus(\''+b.id+'\',\'cancelled\')">❌ Отменить</button>';
+  else if(stt==='paid')btns+='<a class="btn" style="background:#8E8E93" href="/api/act/refund/'+encodeURIComponent(b.id)+'" target="_blank">💸 Возврат залога</a><a class="btn" style="background:#8E8E93" href="/api/act/refund/'+encodeURIComponent(b.id)+'/manual" target="_blank">🧾 Частичный</a><button class="btn" style="background:#FF3B30" onclick="setStatus(\''+b.id+'\',\'cancelled\')">❌ Отменить</button>';
+  else btns+='<button class="btn" style="background:#007AFF" onclick="setStatus(\''+b.id+'\',\'pending\')">🔄 Вернуть в заявки</button>';
+  if(b.paymentUrl)btns+='<a class="btn" style="background:#007AFF" href="'+b.paymentUrl+'" target="_blank">💳 Ссылка на оплату</a>';
+  const row=(l,v)=>'<div class="row"><span>'+l+'</span><b>'+v+'</b></div>';
+  const sec=t=>'<div class="sec">'+t+'</div>';
+  bm.querySelector('.mcard').innerHTML=
+   '<div class="phead"><div><h2 style="margin:0">'+esc(b.name||'—')+'</h2><div class="dsub">'+b.id+' · забронировано '+fdt2(b.created)+'</div></div><div style="display:flex;gap:10px;align-items:center"><span class="pill" style="background:'+pl[0]+'">'+pl[1]+'</span><button class="close" onclick="closeBook()">✕</button></div></div>'+
+   '<div class="dgrid"><div>'+sec('ГОСТЬ')+
+   row('Телефон','<a href="tel:'+esc(b.phone||'')+'" style="color:#0A84FF;text-decoration:none">'+esc(b.phone||'—')+'</a>')+
+   row('Канал',CH[b.source]||b.source||'MAX')+
+   row('Гостей',esc(b.guests||'—'))+
+   (b.comment?row('Комментарий',esc(b.comment)):'')+
+   sec('ПРОЖИВАНИЕ')+
+   row('Заезд',fd2(b.checkIn)+', с 15:00')+
+   row('Выезд',fd2(b.checkOut)+', до 12:00')+
+   row('Ночей',b.nights||1)+
+   '</div><div>'+sec('ОПЛАТА')+
+   row('Сумма',Number(b.total||0).toLocaleString('ru-RU')+' ₽')+
+   (b.paidAt?'<div class="box ok">💰 Залог внесён · 10 000 ₽ · '+fd2(String(b.paidAt).slice(0,10))+'</div>':'<div class="box no">⚠️ Залог ещё не внесён</div>')+
+   (b.refundedAt?row('Возврат',Number(b.refundedAmount||0).toLocaleString('ru-RU')+' ₽ · '+fd2(String(b.refundedAt).slice(0,10))):'')+
+   '</div></div>'+
+   '<div class="btns">'+btns+'</div>';
+  bm.classList.add('open');
+ };
+})();
+</script>
+<script>
+/* === v5: вкладки Гости и Уборки === */
+(function(){
+ const st=document.createElement('style');
+ st.textContent='.tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}'+
+ '.tab{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#AEAEB2;border-radius:11px;padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer}'+
+ '.tab.active{background:#E8914F;color:#1C1C1E;border-color:transparent}'+
+ '.view{padding:20px 24px;margin-bottom:16px}'+
+ '.gtable{width:100%;border-collapse:collapse;font-size:14px;margin-top:12px}'+
+ '.gtable th{text-align:left;color:#98989D;font-size:12px;padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.1)}'+
+ '.gtable td{padding:10px;border-bottom:1px solid rgba(255,255,255,.06)}'+
+ '.mini{background:rgba(255,255,255,.08);border:none;color:#AEAEB2;border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer}'+
+ '.mini:hover{color:#F5F5F7}';
+ document.head.appendChild(st);
+ const tabs=document.createElement('div');tabs.className='tabs';
+ tabs.innerHTML='<button class="tab active" data-v="board">♟️ Шахматка</button><button class="tab" data-v="guests">👥 Гости</button><button class="tab" data-v="clean">🧽 Уборки</button>';
+ document.querySelector('.top').after(tabs);
+ const vg=document.createElement('div');vg.id='viewGuests';vg.className='card view';vg.style.display='none';
+ vg.innerHTML='<div class="phead"><h2 style="margin:0">👥 Гости</h2><div style="display:flex;gap:10px;flex-wrap:wrap"><input id="gSearch" placeholder="Поиск: имя или телефон" style="background:#2C2C2E;border:1px solid rgba(255,255,255,.15);color:#F5F5F7;border-radius:10px;padding:9px 14px;font-size:14px;min-width:220px"><button class="mini" onclick="loadGuests()">🔍 Найти</button><button class="mini" onclick="exportGuests()">⬇ Экспорт CSV</button><button class="mini" onclick="syncNow()">🔄 Синхронизать</button></div></div><div id="gTable" style="overflow:auto"></div>';
+ document.body.appendChild(vg);
+ const vc=document.createElement('div');vc.id='viewClean';vc.className='card view';vc.style.display='none';
+ vc.innerHTML='<div class="phead"><h2 style="margin:0">🧽 Уборки после выездов</h2><button class="mini" onclick="syncNow()">🔄 Синхронизать</button></div><div id="cList" style="margin-top:12px"></div>';
+ document.body.appendChild(vc);
+ const MD3=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+ const fd3=s=>{if(!s)return '—';const p=String(s).split('-');return parseInt(p[2])+' '+MD3[parseInt(p[1])-1]+' '+p[0];};
+ window.setView=function(v){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.v===v));
+  document.querySelectorAll('.kpis,.row2,.gridcard').forEach(el=>el.style.display=(v==='board')?'':'none');
+  document.getElementById('viewGuests').style.display=(v==='guests')?'block':'none';
+  document.getElementById('viewClean').style.display=(v==='clean')?'block':'none';
+  if(v==='guests')loadGuests();
+  if(v==='clean')loadClean();
+ };
+ tabs.onclick=e=>{const t=e.target.closest('.tab');if(t)setView(t.dataset.v);};
+ window.syncNow=async function(){await fetch('/admin/api/sync');loadGuests();loadClean();};
+ window.loadGuests=async function(){
+  const q=(document.getElementById('gSearch').value||'').trim();
+  const r=await fetch('/admin/api/guests?q='+encodeURIComponent(q));const d=await r.json();
+  window.LAST_GUESTS=d.guests||[];
+  document.getElementById('gTable').innerHTML='<table class="gtable"><tr><th>Гость</th><th>Телефон</th><th>Визитов</th><th>Потрачено</th><th>Последний визит</th><th>Канал</th><th></th></tr>'+
+  (d.guests||[]).map(g=>'<tr><td><b>'+esc(g.name||'—')+'</b></td><td><a href="tel:'+esc(g.phone)+'" style="color:#0A84FF;text-decoration:none">'+esc(g.phone)+'</a></td><td>'+g.visits+'</td><td>'+Number(g.total_spent||0).toLocaleString('ru-RU')+' ₽</td><td>'+fd3(String(g.last_stay||'').slice(0,10))+'</td><td>'+esc(g.source||'')+'</td><td><button class="mini" onclick="navigator.clipboard.writeText(\''+esc(g.phone)+'\')">📋</button></td></tr>').join('')+
+  '</table>';
+ };
+ window.exportGuests=function(){
+  const rows=window.LAST_GUESTS||[];
+  const csv='\uFEFFИмя;Телефон;Визитов;Потрачено;Последний визит;Канал\n'+rows.map(g=>[g.name,g.phone,g.visits,g.total_spent,String(g.last_stay||'').slice(0,10),g.source].join(';')).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='guests.csv';a.click();
+ };
+ window.loadClean=async function(){
+  const r=await fetch('/admin/api/cleanings');const d=await r.json();
+  const list=d.cleanings||[];
+  document.getElementById('cList').innerHTML=list.length?list.map(c=>{
+   const done=c.status==='done';
+   return '<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid rgba(255,255,255,.1);border-radius:12px;margin-bottom:8px;flex-wrap:wrap">'+
+   '<b style="min-width:130px">'+fd3(String(c.c_date).slice(0,10))+'</b>'+
+   '<span style="color:#98989D;font-size:13px">брань '+esc(c.booking_id)+'</span>'+
+   '<span class="pill" style="background:'+(done?'#34C759':'#FF9F0A')+';font-size:12px;padding:4px 12px">'+(done?'Готово':'Ожидает')+'</span>'+
+   '<span style="color:#98989D;font-size:13px;flex:1">'+esc(c.note||'')+'</span>'+
+   '<button class="mini" onclick="cleanToggle('+c.id+',\''+(done?'pending':'done')+'\',\''+esc(c.note||'').replace(/'/g,'\\\'')+'\')">'+(done?'↩️ Вернуть':'✅ Готово')+'</button>'+
+   '<button class="mini" onclick="cleanNote('+c.id+',\''+c.status+'\',\''+esc(c.note||'').replace(/'/g,'\\\'')+'\')">✎</button></div>';
+  }).join(''):'<div style="color:#98989D;font-size:14px">Уборок пока нет — они появятся автоматически, когда бронь станет «Подтверждена» или «Оплачена». Нажми «🔄 Синхронизать».</div>';
+ };
+ window.cleanToggle=async function(id,status,note){await fetch('/admin/api/cleanings/status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id,status:status,note:note})});loadClean();};
+ window.cleanNote=async function(id,status,cur){const n=prompt('Заметка к уборке (полотенца, химчистка...):',cur||'');if(n===null)return;await fetch('/admin/api/cleanings/status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id,status:status,note:n})});loadClean();};
+})();
+</script>
+<script>
+/* === v6: маска телефона + единый формат +7999-123-45-67 === */
+(function(){
+ window.maskDigits=function(d){
+  d=String(d).replace(/\D/g,'');
+  if(d.length===11&&(d[0]==='7'||d[0]==='8'))d=d.slice(1);
+  d=d.slice(0,10);
+  let out='+7';
+  if(d.length)out+=d.slice(0,3);
+  if(d.length>3)out+='-'+d.slice(3,6);
+  if(d.length>6)out+='-'+d.slice(6,8);
+  if(d.length>8)out+='-'+d.slice(8,10);
+  return out;
+ };
+ window.normTel=function(s){
+  let d=String(s||'').replace(/\D/g,'');
+  if(d.length===11&&(d[0]==='8'||d[0]==='7'))d='7'+d.slice(1);
+  if(d.length===10&&d[0]==='9')d='7'+d;
+  return (d.length===11&&d[0]==='7')?'+'+d:String(s||'');
+ };
+ window.fmtPhone=function(s){
+  let d=String(s||'').replace(/\D/g,'');
+  if(d.length===11&&d[0]==='7')return maskDigits(d.slice(1));
+  if(d.length===10)return maskDigits(d);
+  return String(s||'—');
+ };
+ window.attachPhoneMask=function(el){
+  if(!el||el.dataset.masked)return;el.dataset.masked='1';
+  el.addEventListener('input',function(){
+   const d=el.value.replace(/\D/g,'');
+   el.value=d?maskDigits(d):'';
+  });
+  el.addEventListener('keydown',function(e){
+   if(e.key==='Backspace'&&/-$/.test(el.value)){
+    e.preventDefault();
+    const d=el.value.replace(/\D/g,'').slice(0,-1);
+    el.value=d?maskDigits(d):'';
+   }
+  });
+ };
+ const oc=window.openCreate;
+ window.openCreate=function(t){oc(t);attachPhoneMask(document.getElementById('fPhone'));};
+ const sh=window.show;
+ window.show=function(id){
+  sh(id);
+  document.querySelectorAll('#bookModal a[href^="tel:"]').forEach(a=>{a.href='tel:'+normTel(a.textContent);a.textContent=fmtPhone(a.textContent);});
+ };
+ const lg=window.loadGuests;
+ window.loadGuests=async function(){
+  await lg();
+  document.querySelectorAll('#gTable a[href^="tel:"]').forEach(a=>{a.href='tel:'+normTel(a.textContent);a.textContent=fmtPhone(a.textContent);});
+ };
+})();
+</script>
+<script>
+/* === v7: маска без залипания семёрок === */
+window.maskDigits=function(d){
+ d=String(d).replace(/\D/g,'');
+ if(d[0]==='8')d=d.slice(1);
+ if(d[0]==='7')d=d.slice(1);
+ d=d.slice(0,10);
+ if(!d)return '';
+ let out='+7';
+ if(d.length)out+=d.slice(0,3);
+ if(d.length>3)out+='-'+d.slice(3,6);
+ if(d.length>6)out+='-'+d.slice(6,8);
+ if(d.length>8)out+='-'+d.slice(8,10);
+ return out;
+};
+</script>
+<script>
+/* === v8: добавить / редактировать / импорт гостей === */
+(function(){
+ const st=document.createElement('style');
+ st.textContent='#guestModal .mcard{max-width:520px!important;width:calc(100% - 32px)!important;max-height:92vh;overflow-y:auto}';
+ document.head.appendChild(st);
+ const gm=document.createElement('div');gm.className='modal';gm.id='guestModal';gm.innerHTML='<div class="mcard"></div>';document.body.appendChild(gm);
+ window.closeGuest=function(){gm.classList.remove('open');};
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeGuest();});
+ const MD4=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+ const fd4=s=>{if(!s||String(s).slice(0,4)==='null')return '—';const p=String(s).split('-');return parseInt(p[2])+' '+MD4[parseInt(p[1])-1]+' '+p[0];};
+ const ph=document.querySelector('#viewGuests .phead > div');
+ if(ph)ph.insertAdjacentHTML('afterbegin','<button class="mini" onclick="openGuest()">➕ Добавить гостя</button><button class="mini" onclick="openImport()">📥 Импорт базы</button>');
+ window.openGuest=function(g){
+  g=g||{};
+  gm.querySelector('.mcard').innerHTML=
+   '<div class="phead"><h2 style="margin:0">'+(g.id?'✎ Гость':'➕ Новый гость')+'</h2><button class="close" onclick="closeGuest()">✕</button></div>'+
+   '<div class="sec">ДАННЫЕ</div>'+
+   '<label>Имя</label><input id="gName" value="'+String(g.name||'').replace(/"/g,'&quot;')+'">'+
+   '<label>Телефон</label><input id="gPhone" inputmode="tel" value="'+(g.phone?fmtPhone(g.phone):'')+'">'+
+   '<label>Заметка (откуда, предпочтения...)</label><input id="gNote" value="'+String(g.note||'').replace(/"/g,'&quot;')+'">'+
+   '<div class="mbtns"><button class="btn" style="background:#007AFF" onclick="saveGuestUI('+(g.id||0)+')">Сохранить</button><button class="btn" style="background:#8E8E93" onclick="closeGuest()">Отмена</button></div>';
+  gm.classList.add('open');
+  attachPhoneMask(document.getElementById('gPhone'));
+ };
+ window.openGuestIdx=function(i){openGuest(window.LAST_GUESTS[i]);};
+ window.saveGuestUI=async function(id){
+  const body={name:document.getElementById('gName').value,phone:document.getElementById('gPhone').value,note:document.getElementById('gNote').value};
+  if(id)body.id=id;
+  const r=await fetch('/admin/api/guests',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const d=await r.json();
+  if(d.ok){closeGuest();loadGuests();}else{alert('Ошибка: '+(d.error||''));}
+ };
+ window.delGuest=async function(id){if(!confirm('Удалить гостя из базы?'))return;await fetch('/admin/api/guests/delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id})});loadGuests();};
+ window.openImport=function(){
+  gm.querySelector('.mcard').innerHTML=
+   '<div class="phead"><h2 style="margin:0">📥 Импорт базы клиентов</h2><button class="close" onclick="closeGuest()">✕</button></div>'+
+   '<div style="font-size:13px;color:#98989D;margin:8px 0;line-height:1.5">Вставь контакты по одному на строку в любом формате:<br>Иван 8 999 123 45 67<br>Мария, +7 (999) 123-45-67<br>Пётр;+79991234567<br>Телефоны приведутся к виду +79991234567, дубли не создадутся.</div>'+
+   '<textarea id="gImport" rows="10" style="width:100%;background:#2C2C2E;border:1px solid rgba(255,255,255,.15);color:#F5F5F7;border-radius:12px;padding:12px;font-size:14px"></textarea>'+
+   '<div class="mbtns"><button class="btn" style="background:#34C759" onclick="doImport()">Импортировать</button><button class="btn" style="background:#8E8E93" onclick="closeGuest()">Отмена</button></div>';
+  gm.classList.add('open');
+ };
+ window.doImport=async function(){
+  const text=document.getElementById('gImport').value;
+  const lines=text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
+  const guests=lines.map(l=>{
+   const m=l.match(/\+?\d(?:[\d\s\-()]{7,})/);
+   const phone=m?m[0]:'';
+   const name=l.replace(phone,'').replace(/[,;|]+/g,' ').replace(/\s+/g,' ').trim();
+   return {name:name||'Без имени', phone:phone};
+  }).filter(x=>x.phone);
+  if(!guests.length){alert('Не нашёл ни одного телефона в строках');return;}
+  if(!confirm('Импортировать гостей: '+guests.length+'?'))return;
+  const r=await fetch('/admin/api/guests/import',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({guests:guests})});
+  const d=await r.json();
+  alert('Добавлено: '+d.added+', с ошибками: '+d.failed);
+  closeGuest();loadGuests();
+ };
+ window.loadGuests=async function(){
+  const q=(document.getElementById('gSearch').value||'').trim();
+  const r=await fetch('/admin/api/guests?q='+encodeURIComponent(q));const d=await r.json();
+  window.LAST_GUESTS=d.guests||[];
+  document.getElementById('gTable').innerHTML='<table class="gtable"><tr><th>Гость</th><th>Телефон</th><th>Визитов</th><th>Потрачено</th><th>Последний визит</th><th>Канал</th><th></th></tr>'+
+  (d.guests||[]).map((g,i)=>'<tr><td><b>'+esc(g.name||'—')+'</b></td><td><a href="tel:'+normTel(g.phone)+'" style="color:#0A84FF;text-decoration:none">'+fmtPhone(g.phone)+'</a></td><td>'+g.visits+'</td><td>'+Number(g.total_spent||0).toLocaleString('ru-RU')+' ₽</td><td>'+fd4(g.last_stay)+'</td><td>'+esc(g.source||'')+'</td><td style="white-space:nowrap"><button class="mini" onclick="navigator.clipboard.writeText(\''+normTel(g.phone)+'\')">📋</button> <button class="mini" onclick="openGuestIdx('+i+')">✎</button> <button class="mini" onclick="delGuest('+g.id+')">🗑</button></td></tr>').join('')+
+  '</table>';
+ };
+})();
+</script>
+<script>
+/* === v9: экспорт месяца CSV + журнал событий брони === */
+(function(){
+ const seg=document.querySelector('.top .seg');
+ if(seg)seg.insertAdjacentHTML('afterend','<button class="addbtn" style="background:#2C2C2E;border:1px solid rgba(255,255,255,.15);box-shadow:none;margin-left:10px" onclick="exportMonthCSV()">⬇ CSV</button>');
+ window.exportMonthCSV=function(){
+  const y=cur.getFullYear(),m=cur.getMonth();
+  const key=y+'-'+String(m+1).padStart(2,'0');
+  const rows=BOOKS.filter(b=>String(b.checkIn||'').slice(0,7)===key);
+  const head='№;Имя;Телефон;Заезд;Выезд;Ночей;Гостей;Сумма;Статус;Источник;Залог оплачен;Создана';
+  const csv='\uFEFF'+head+'\n'+rows.map(b=>[b.id,b.name,b.phone,b.checkIn,b.checkOut,b.nights,b.guests,b.total,b.status,b.source,b.paidAt?'да':'нет',b.created].join(';')).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='bookings-'+key+'.csv';a.click();
+ };
+ const sh=window.show;
+ window.show=function(id){
+  sh(id);
+  fetch('/admin/api/events?id='+encodeURIComponent(id)).then(r=>r.json()).then(d=>{
+   const anchorEl=document.querySelector('#bookModal .btns');
+   if(!anchorEl)return;
+   const RU={'admin_status:confirmed':'Подтверждена из админки','admin_status:cancelled':'Отменена из админки','admin_status:rejected':'Отклонена','admin_status:pending':'Возвращена в заявки','admin_status:paid':'Статус «оплачена» из админки','admin_create':'Бронь создана вручную','confirmed_link':'Подтверждена по ссылке','payment_succeeded':'💰 Оплата залога получена','manual_paid':'Отмечена оплаченной вручную','refund_created':'💸 Создан возврат залога'};
+   anchorEl.insertAdjacentHTML('beforebegin','<div class="sec">ЖУРНАЛ СОБЫТИЙ</div><div style="max-height:140px;overflow:auto">'+((d.events||[]).length?(d.events||[]).map(e=>'<div style="display:flex;gap:10px;font-size:13px;padding:6px 2px;border-bottom:1px solid rgba(255,255,255,.06)"><span style="color:#98989D;min-width:130px">'+String(e.created_at||'').slice(0,16).replace('T',' ')+'</span><b>'+(RU[e.event]||esc(e.event))+'</b><span style="color:#98989D">'+esc(e.details||'')+'</span></div>').join(''):'<div style="color:#98989D;font-size:13px">Событий пока нет — появятся при подтверждениях и оплатах</div>')+'</div>');
+  }).catch(()=>{});
+ };
+})();
+</script>
+<script>
+/* === v10: удаление брони === */
+(function(){
+ const sh=window.show;
+ window.show=function(id){
+  sh(id);
+  const btns=document.querySelector('#bookModal .btns');
+  if(btns&&!btns.querySelector('.delbook'))btns.insertAdjacentHTML('beforeend','<button class="btn delbook" style="background:#FF453A;margin-left:auto" onclick="delBooking(\''+id+'\')">🗑 Удалить</button>');
+ };
+ window.delBooking=async function(id){
+  const b=BOOKS.find(x=>x.id===id);
+  let warn='Удалить бронь '+id+'?\nОна исчезнет из базы, шахматки и календаря. Действие необратимо.';
+  if(b&&b.status==='paid')warn+='\n\n⚠️ Бронь ОПЛАЧЕНА: залог гостю автоматически НЕ вернётся! Сначала сделай возврат.';
+  if(!confirm(warn))return;
+  const r=await fetch('/admin/api/bookings/delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id})});
+  const d=await r.json();
+  if(d.ok){closeBook();load();}else{alert('Ошибка: '+(d.error||''));}
+ };
+})();
+</script>
+<script>
+/* === v11: центр рассылок === */
+(function(){
+ const tabsEl=document.querySelector('.tabs');
+ if(tabsEl)tabsEl.insertAdjacentHTML('beforeend','<button class="tab" data-v="mail">✉️ Рассылка</button>');
+ const vm=document.createElement('div');vm.id='viewMail';vm.className='card view';vm.style.display='none';
+ vm.innerHTML='<div class="phead"><h2 style="margin:0">✉️ Центр рассылок</h2></div>'+
+ '<div class="mrow2" style="margin-top:12px"><div><label>Кому отправить</label><select id="mSeg" onchange="renderMail()">'+
+ '<option value="all">Все гости</option><option value="year">Гости этого года</option><option value="week">Заезд в ближайшие 7 дней</option><option value="month">Выехали за последние 30 дней</option><option value="sleep">Давно не были (6+ мес)</option></select></div>'+
+ '<div><label>Шаблон</label><select id="mTpl" onchange="applyTpl()">'+
+ '<option value="promo">📣 Акция / новость</option><option value="back">🦊 Возврат гостей</option><option value="before">🔑 Напоминание перед заездом</option><option value="after">🧡 Благодарность + отзыв</option></select></div></div>'+
+ '<label>Текст сообщения (подстановки: {name}, {checkin}, {checkout})</label>'+
+ '<textarea id="mText" rows="5" style="width:100%;background:#2C2C2E;border:1px solid rgba(255,255,255,.15);color:#F5F5F7;border-radius:12px;padding:12px;font-size:14px"></textarea>'+
+ '<div style="display:flex;gap:10px;margin:10px 0;flex-wrap:wrap"><button class="mini" onclick="copyPhones()">📋 Скопировать телефоны</button><button class="mini" onclick="renderMail()">🔄 Обновить список</button></div>'+
+ '<div id="mCount" style="font-size:13px;color:#98989D;margin-bottom:8px"></div>'+
+ '<div id="mList" style="max-height:340px;overflow:auto"></div>';
+ document.body.appendChild(vm);
+ const TPL={
+  promo:'Здравствуйте, {name}! 🦊 Лис-А-Дом открыл бронирование на новый сезон. Для постоянных гостей — бонус и лучшие даты напрямую. Ответьте на сообщение — подберём удобное время!',
+  back:'Здравствуйте, {name}! Вы гостили у нас в Лис-А-Дом 🧡 Скучаем! Для постоянных гостей держим скидку и любимые даты. Показать, что свободно в ближайшие выходные?',
+  before:'Здравствуйте, {name}! Ждём вас {checkin} с 15:00 в Лис-А-Дом 🦊 Выезд {checkout} до 12:00. Как будете выдвигаться — напишите, встретим и всё подскажем!',
+  after:'Здравствуйте, {name}! Спасибо, что гостили у нас 🧡 Если всё понравилось — поделитесь, пожалуйста, отзывом, это очень помогает. И возвращайтесь — будем рады!'
+ };
+ let MAIL=[];
+ const MD5=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+ const fd5=s=>{if(!s||String(s).slice(0,4)==='null')return '—';const p=String(s).split('-');return parseInt(p[2])+' '+MD5[parseInt(p[1])-1];};
+ const todayISO=()=>new Date().toISOString().slice(0,10);
+ const plusDays=n=>{const d=new Date();d.setDate(d.getDate()+n);return d.toISOString().slice(0,10);};
+ const minusDays=n=>{const d=new Date();d.setDate(d.getDate()-n);return d.toISOString().slice(0,10);};
+ function bookingsOf(phone){const d=String(phone||'').replace(/\D/g,'');return BOOKS.filter(b=>String(b.phone||'').replace(/\D/g,'')===d);}
+ function pickB(g){const bs=bookingsOf(g.phone).slice().sort((a,b)=>String(a.checkIn||'').localeCompare(String(b.checkIn||'')));const t=todayISO();return bs.find(b=>b.checkIn>=t)||bs[bs.length-1]||{};}
+ function fill(g){const b=pickB(g);return document.getElementById('mText').value.split('{name}').join(g.name||'').split('{checkin}').join(fd5(b.checkIn)).split('{checkout}').join(fd5(b.checkOut));}
+ window.applyTpl=function(){document.getElementById('mText').value=TPL[document.getElementById('mTpl').value];renderMail();};
+ window.copyPhones=function(){navigator.clipboard.writeText(MAIL.map(g=>normTel(g.phone)).join(', '));alert('Телефоны скопированы: '+MAIL.length);};
+ window.copyMsg=function(i){navigator.clipboard.writeText(fill(MAIL[i]));alert('Сообщение для «'+MAIL[i].name+'» скопировано');};
+ window.renderMail=async function(){
+  const r=await fetch('/admin/api/guests');const d=await r.json();const guests=d.guests||[];
+  const seg=document.getElementById('mSeg').value;const t=todayISO();
+  MAIL=guests.filter(g=>{
+   const bs=bookingsOf(g.phone);
+   if(seg==='all')return true;
+   if(seg==='year')return String(g.last_stay||'').slice(0,4)===t.slice(0,4);
+   if(seg==='week')return bs.some(b=>(b.status==='paid'||b.status==='confirmed')&&b.checkIn>=t&&b.checkIn<=plusDays(7));
+   if(seg==='month')return bs.some(b=>b.checkOut<=t&&b.checkOut>=minusDays(30));
+   if(seg==='sleep')return g.last_stay&&String(g.last_stay).slice(0,10)<minusDays(180);
+   return true;
+  });
+  document.getElementById('mCount').textContent='Получателей: '+MAIL.length;
+  document.getElementById('mList').innerHTML=MAIL.map((g,i)=>{
+   const wa='https://wa.me/'+normTel(g.phone).replace('+','')+'?text='+encodeURIComponent(fill(g));
+   return '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid rgba(255,255,255,.1);border-radius:12px;margin-bottom:6px;flex-wrap:wrap"><b style="min-width:140px">'+esc(g.name||'—')+'</b><a href="tel:'+normTel(g.phone)+'" style="color:#0A84FF;text-decoration:none;font-size:13px">'+fmtPhone(g.phone)+'</a><span style="color:#98989D;font-size:12px">был(а): '+fd5(String(g.last_stay||'').slice(0,10))+'</span><span style="margin-left:auto;display:flex;gap:6px"><button class="mini" onclick="copyMsg('+i+')">✉️ Текст</button><a class="mini" style="text-decoration:none;display:inline-block" href="'+wa+'" target="_blank">WhatsApp</a></span></div>';
+  }).join('')||'<div style="color:#98989D">В этом сегменте пока пусто</div>';
+ };
+ const oldSet=window.setView;
+ window.setView=function(v){
+  oldSet(v);
+  document.getElementById('viewMail').style.display=(v==='mail')?'block':'none';
+  if(v==='mail'){if(!document.getElementById('mText').value)applyTpl();else renderMail();}
+ };
+})();
+</script>
+<script>
+/* === v12: отправка в MAX вместо WhatsApp === */
+(function(){
+ let MAIL=[];
+ const MD6=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+ const fd6=s=>{if(!s||String(s).slice(0,4)==='null')return '—';const p=String(s).split('-');return parseInt(p[2])+' '+MD6[parseInt(p[1])-1];};
+ const todayISO=()=>new Date().toISOString().slice(0,10);
+ const plusDays=n=>{const d=new Date();d.setDate(d.getDate()+n);return d.toISOString().slice(0,10);};
+ const minusDays=n=>{const d=new Date();d.setDate(d.getDate()-n);return d.toISOString().slice(0,10);};
+ function bookingsOf(phone){const d=String(phone||'').replace(/\D/g,'');return BOOKS.filter(b=>String(b.phone||'').replace(/\D/g,'')===d);}
+ function pickB(g){const bs=bookingsOf(g.phone).slice().sort((a,b)=>String(a.checkIn||'').localeCompare(String(b.checkIn||'')));const t=todayISO();return bs.find(b=>b.checkIn>=t)||bs[bs.length-1]||{};}
+ function fill(g){const b=pickB(g);return document.getElementById('mText').value.split('{name}').join(g.name||'').split('{checkin}').join(fd6(b.checkIn)).split('{checkout}').join(fd6(b.checkOut));}
+ window.copyPhones=function(){navigator.clipboard.writeText(MAIL.map(g=>normTel(g.phone)).join(', '));alert('Телефоны скопированы: '+MAIL.length);};
+ window.copyMsg=function(i){navigator.clipboard.writeText(fill(MAIL[i]));alert('Сообщение для «'+MAIL[i].name+'» скопировано');};
+ window.sendMax=async function(i){
+  const g=MAIL[i];
+  const r=await fetch('/admin/api/send-max',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:g.phone,text:fill(g)})});
+  const d=await r.json();
+  alert(d.ok?'📨 Отправлено в MAX гостю «'+g.name+'» ✅':'Не вышло: '+(d.error||''));
+ };
+ window.renderMail=async function(){
+  const r=await fetch('/admin/api/guests');const d=await r.json();const guests=d.guests||[];
+  const seg=document.getElementById('mSeg').value;const t=todayISO();
+  MAIL=guests.filter(g=>{
+   const bs=bookingsOf(g.phone);
+   if(seg==='all')return true;
+   if(seg==='year')return String(g.last_stay||'').slice(0,4)===t.slice(0,4);
+   if(seg==='week')return bs.some(b=>(b.status==='paid'||b.status==='confirmed')&&b.checkIn>=t&&b.checkIn<=plusDays(7));
+   if(seg==='month')return bs.some(b=>b.checkOut<=t&&b.checkOut>=minusDays(30));
+   if(seg==='sleep')return g.last_stay&&String(g.last_stay).slice(0,10)<minusDays(180);
+   return true;
+  });
+  document.getElementById('mCount').textContent='Получателей: '+MAIL.length;
+  document.getElementById('mList').innerHTML=MAIL.map((g,i)=>{
+   return '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid rgba(255,255,255,.1);border-radius:12px;margin-bottom:6px;flex-wrap:wrap"><b style="min-width:140px">'+esc(g.name||'—')+'</b><a href="tel:'+normTel(g.phone)+'" style="color:#0A84FF;text-decoration:none;font-size:13px">'+fmtPhone(g.phone)+'</a><span style="color:#98989D;font-size:12px">был(а): '+fd6(String(g.last_stay||'').slice(0,10))+'</span><span style="margin-left:auto;display:flex;gap:6px"><button class="mini" onclick="copyMsg('+i+')">✉️ Текст</button><button class="mini" onclick="sendMax('+i+')">📨 MAX</button></span></div>';
+  }).join('')||'<div style="color:#98989D">В этом сегменте пока пусто</div>';
+ };
+})();
+</script>

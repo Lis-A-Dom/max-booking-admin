@@ -1,0 +1,2 @@
+✅ Подтвердить: https://staywise.ru/api/act/confirm/БОР-260913-OGNV
+❌ Отклонить: https://staywise.ru/api/act/reject/БОР-260913-OGNV

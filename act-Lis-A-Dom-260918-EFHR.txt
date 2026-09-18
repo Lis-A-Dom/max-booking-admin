@@ -1,0 +1,2 @@
+✅ Подтвердить: https://lis-a-dom.ru/api/act/confirm/Lis-A-Dom-260918-EFHR
+❌ Отклонить: https://lis-a-dom.ru/api/act/reject/Lis-A-Dom-260918-EFHR

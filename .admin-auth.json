@@ -1,0 +1,11 @@
+{
+  "pass": {
+    "salt": "5824afffcd7af4787cc5bea71982a90f",
+    "hash": "a7bd5501dd1a3ef80b4980bd8c11fcab6db2d0908456401c11230514ddd6b1d6aa7a294572ecc7323f823bbe144fd210b4368fb3d977a1eda8a6adfc7e022b64"
+  },
+  "recovery": {
+    "salt": "e321f7ad2392edc381e7d0cb514d3fd8",
+    "hash": "54fee52d55e84360a440385d7e3caae8870833d064d03d9b0af0fb106f360e495dfc972a1cbf05a656ce7f43d78dbc95d70c4dc73715b9edf30513cbaef2aea0"
+  },
+  "createdAt": "2026-09-15T20:42:43.452Z"
+}

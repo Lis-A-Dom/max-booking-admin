@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Вход — Админка Лис-А-Дом</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;color:#fff;background:radial-gradient(1200px 600px at 20% -10%,#3a2417 0%,#131315 55%,#0b0b0c 100%)}
+.card{width:100%;max-width:400px;background:rgba(44,44,46,.72);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,.12);border-radius:26px;padding:36px 30px;box-shadow:0 30px 80px rgba(0,0,0,.55);text-align:center}
+.fox{font-size:56px;filter:drop-shadow(0 6px 16px rgba(232,145,79,.45))}
+h1{font-size:20px;margin:10px 0 4px}
+.sub{color:rgba(255,255,255,.55);font-size:13px;margin:0 0 24px}
+input{width:100%;padding:15px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);color:#fff;font-size:16px;outline:none;margin-bottom:12px}
+input:focus{border-color:#E8914F}
+input::placeholder{color:rgba(255,255,255,.35)}
+.btn{width:100%;border:none;border-radius:14px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;background:linear-gradient(135deg,#E8914F,#C86B2E);color:#fff}
+.btn:active{transform:scale(.98)}
+.link{margin-top:16px;font-size:13.5px;color:rgba(255,255,255,.5)}
+.link a{color:#E8914F;text-decoration:none;cursor:pointer}
+.err{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:#fca5a5;border-radius:12px;padding:10px 12px;font-size:13.5px;margin-bottom:12px;display:none}
+.codebox{background:rgba(48,209,88,.12);border:1px dashed rgba(48,209,88,.5);border-radius:14px;padding:16px;margin:16px 0;font-size:20px;font-weight:800;letter-spacing:2px;color:#30D158;cursor:pointer;word-break:break-all}
+.warn{font-size:12.5px;color:rgba(255,255,255,.5);line-height:1.5;margin-bottom:16px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="fox">🦊</div>
+  <h1>Лис-А-Дом</h1>
+  <p class="sub" id="sub">Админка бронирований</p>
+  <div class="err" id="err"></div>
+
+  <div id="mode-login" class="hidden">
+    <input type="password" id="pass" placeholder="Пароль администратора" autocomplete="current-password">
+    <button class="btn" id="btn-login">Войти</button>
+    <div class="link"><a id="to-recover">Забыли пароль?</a></div>
+  </div>
+
+  <div id="mode-setup" class="hidden">
+    <input type="password" id="setup-pass" placeholder="Придумайте пароль (мин. 8 символов)">
+    <input type="password" id="setup-pass2" placeholder="Повторите пароль">
+    <button class="btn" id="btn-setup">Создать пароль</button>
+  </div>
+
+  <div id="mode-recover" class="hidden">
+    <input type="text" id="rec-code" placeholder="Код восстановления (XXXX-XXXX-XXXX)">
+    <input type="password" id="rec-pass" placeholder="Новый пароль (мин. 8 символов)">
+    <button class="btn" id="btn-recover">Сбросить пароль</button>
+    <div class="link"><a id="back-login">← Вернуться ко входу</a></div>
+  </div>
+
+  <div id="mode-code" class="hidden">
+    <div class="codebox" id="codebox" title="Нажми, чтобы скопировать">CODE</div>
+    <p class="warn">⚠️ Это код восстановления доступа. Спиши его СЕЙЧАС и храни в надёжном месте — он показан один раз! Нажми на код, чтобы скопировать.</p>
+    <button class="btn" id="btn-to-login">Я записал код, войти</button>
+  </div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+function show(m){['login','setup','recover','code'].forEach(x=>$('mode-'+x).classList.toggle('hidden',x!==m));$('err').style.display='none';}
+function err(t){const e=$('err');e.textContent=t;e.style.display='block';}
+async function api(p,body){const r=await fetch(p,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const j=await r.json().catch(()=>({}));return{ok:r.ok&&j.ok,j};}
+
+fetch('/admin/api/auth-status').then(r=>r.json()).then(s=>{
+  if(s.authorized){location.replace('/admin/board');return;}
+  show(s.needSetup?'setup':'login');
+  $('sub').textContent=s.needSetup?'Первичная настройка: создайте пароль администратора':'Введите пароль для входа в админку';
+});
+
+$('btn-login').onclick=async()=>{const{ok,j}=await api('/admin/api/login',{password:$('pass').value});ok?location.href='/admin/board':err(j.error||'Неверный пароль');};
+$('pass').addEventListener('keydown',e=>{if(e.key==='Enter')$('btn-login').click();});
+$('btn-setup').onclick=async()=>{const p=$('setup-pass').value;if(p!==$('setup-pass2').value)return err('Пароли не совпадают');const{ok,j}=await api('/admin/api/setup',{password:p});if(!ok)return err(j.error||'Ошибка');$('codebox').textContent=j.recoveryCode;show('code');};
+$('btn-recover').onclick=async()=>{const{ok,j}=await api('/admin/api/recover',{code:$('rec-code').value,newPassword:$('rec-pass').value});if(!ok)return err(j.error||'Неверный код');$('codebox').textContent=j.recoveryCode;show('code');};
+$('to-recover').onclick=()=>show('recover');
+$('back-login').onclick=()=>show('login');
+$('btn-to-login').onclick=()=>show('login');
+$('codebox').onclick=()=>{if(navigator.clipboard)navigator.clipboard.writeText($('codebox').textContent);};
+</script>
+</body>
+</html>

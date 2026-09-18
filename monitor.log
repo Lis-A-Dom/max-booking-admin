@@ -1,0 +1,8 @@
+[2026-09-11 18:48:13] state: fail -> ok
+[2026-09-11 19:01:46] state: fail -> ok | MAX: 
+[2026-09-15 08:45:03] TG fail: getaddrinfo EAI_AGAIN api.telegram.org
+[2026-09-15 08:45:03] MAX fallback fail: getaddrinfo EAI_AGAIN platform-api2.max.ru
+[2026-09-15 08:45:03] state: ok -> fail | MAX: FAIL
+[2026-09-15 08:55:16] TG fail: getaddrinfo EAI_AGAIN api.telegram.org
+[2026-09-15 08:55:16] MAX fallback fail: getaddrinfo EAI_AGAIN platform-api2.max.ru
+[2026-09-15 08:55:16] state: fail -> ok | MAX: FAIL

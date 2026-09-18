@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Аренда дома посуточно</title>
+    <script src="https://st.max.ru/js/max-web-app.js"></script>
+    <script>
+      // Инициализация MAX SDK
+      window.addEventListener('load', function() {
+        if (window.WebApp) {
+          console.log('MAX SDK загружен');
+          console.log('initData:', window.WebApp.initData);
+          console.log('Platform:', window.WebApp.platform);
+          console.log('Version:', window.WebApp.version);
+          
+          // Показываем кнопку "Назад" в шапке
+          if (window.WebApp.BackButton) {
+            window.WebApp.BackButton.show();
+            window.WebApp.BackButton.onClick(function() {
+              window.WebApp.close();
+            });
+          }
+        }
+      });
+    </script>
+    <script type="module" crossorigin src="/assets/index-89xjV0el.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CmZHeYVZ.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

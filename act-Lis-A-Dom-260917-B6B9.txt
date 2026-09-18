@@ -1,0 +1,2 @@
+✅ Подтвердить: https://staywise.ru/api/act/confirm/Lis-A-Dom-260917-B6B9
+❌ Отклонить: https://staywise.ru/api/act/reject/Lis-A-Dom-260917-B6B9

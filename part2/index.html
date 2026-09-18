@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Лис-А-Дом — Треугольный дом с купелью в Подмосковье</title>
+  
+  <!-- SEO -->
+  <meta name="description" content="Уникальный A-frame дом с панорамным остеклением, купелью и баней. 1 час от Москвы. от 9000₽/ночь">
+  <meta name="keywords" content="аренда дома подмосковье, a-frame дом, дом с купелью, глэмпинг">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Лис-А-Дом — Треугольный дом с купелью">
+  <meta property="og:description" content="Уникальный A-frame дом с панорамным остеклением, купелью и баней">
+  <meta property="og:image" content="/images/foto/999.jpg">
+  <meta property="og:url" content="https://lis-a-dom.ru/part2">
+  <meta property="og:type" content="website">
+  
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LodgingBusiness",
+    "name": "Лис-А-Дом",
+    "description": "Треугольный A-frame дом с купелью и баней в Подмосковье",
+    "url": "https://lis-a-dom.ru/part2",
+    "telephone": "+79990008006",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Чехов",
+      "addressRegion": "Московская область",
+      "addressCountry": "RU"
+    },
+    "priceRange": "от 9000 RUB"
+  }
+  </script>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/design-system.css">
+  <link rel="stylesheet" href="css/main.css">
+  
+  <!-- Yandex.Metrika -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+    ym(102056951, "init", {clickmap:true,trackLinks:true,accurateTrackBounce:true});
+  </script>
+</head>
+<body>
+  
+  <!-- ═══ STICKY HEADER ═══ -->
+  <header class="header" id="header">
+    <div class="container">
+      <nav class="nav">
+        <a href="/" class="logo">
+          <span class="logo-icon">🦊</span>
+          <span class="logo-text">Лис-А-Дом</span>
+        </a>
+        
+        <div class="nav-links">
+          <a href="#about">О доме</a>
+          <a href="#gallery">Галерея</a>
+          <a href="#activities">Развлечения</a>
+          <a href="#reviews">Отзывы</a>
+          <a href="#contacts">Контакты</a>
+        </div>
+        
+        <div class="nav-cta">
+          <a href="tel:+79990008006" class="phone">+7 999 000 80 06</a>
+          <button class="btn btn-primary btn-sm" onclick="openBooking()">Забронировать</button>
+        </div>
+        
+        <button class="nav-burger" id="burger" aria-label="Меню">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ═══ HERO SECTION ═══ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <img src="images/foto/999.jpg" alt="Лис-А-Дом" loading="eager">
+      <div class="hero-overlay"></div>
+    </div>
+    
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          Свободные даты в октябре
+        </div>
+        
+        <h1 class="hero-title">
+          Треугольный дом<br>
+          <span class="accent">с купелью и баней</span>
+        </h1>
+        
+        <p class="hero-subtitle">
+          Уникальный A-frame дом с панорамным остеклением.<br>
+          1 час от Москвы. Полное уединение.
+        </p>
+        
+        <div class="hero-features">
+          <div class="feature">
+            <span class="feature-icon">🔥</span>
+            <span>Горячая купель</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">🏠</span>
+            <span>До 6 гостей</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">🌲</span>
+            <span>600 м² территории</span>
+          </div>
+        </div>
+        
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-lg" onclick="openBooking()">
+            Выбрать даты
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <button class="btn btn-ghost btn-lg" onclick="playVideo()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            Видео-тур
+          </button>
+        </div>
+        
+        <div class="hero-price">
+          <span class="price-from">от</span>
+          <span class="price-amount">9 000 ₽</span>
+          <span class="price-period">/ ночь</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="hero-scroll">
+      <div class="scroll-indicator">
+        <span></span>
+      </div>
+      <span>Листайте вниз</span>
+    </div>
+  </section>
+
+  <!-- ═══ STICKY BOOKING BAR ═══ -->
+  <div class="booking-bar" id="bookingBar">
+    <div class="container">
+      <div class="booking-bar-content">
+        <div class="booking-dates">
+          <div class="date-field">
+            <label>Заезд</label>
+            <input type="date" id="checkin" placeholder="Выберите дату">
+          </div>
+          <div class="date-field">
+            <label>Выезд</label>
+            <input type="date" id="checkout" placeholder="Выберите дату">
+          </div>
+          <div class="date-field">
+            <label>Гости</label>
+            <select id="guests">
+              <option value="2">2 гостя</option>
+              <option value="3">3 гостя</option>
+              <option value="4">4 гостя</option>
+              <option value="5">5 гостей</option>
+              <option value="6">6 гостей</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="booking-price">
+          <div class="price-total">
+            <span class="price-label">Итого:</span>
+            <span class="price-value" id="totalPrice">0 ₽</span>
+          </div>
+          <button class="btn btn-primary" onclick="submitBooking()">Забронировать</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SOCIAL PROOF ═══ -->
+  <section class="social-proof">
+    <div class="container">
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-number" data-target="200">0</div>
+          <div class="stat-label">Довольных гостей</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number" data-target="4.9">0</div>
+          <div class="stat-label">Рейтинг на Авито</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number" data-target="50">0</div>
+          <div class="stat-label">Повторных визитов</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number" data-target="1">0</div>
+          <div class="stat-label">Час от Москвы</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main>
+    <!-- Секции будут добавлены в следующих шагах -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Место силы и гармонии</h2>
+          <p class="section-subtitle">Дом, где время замедляется</p>
+        </div>
+        
+        <div class="about-content">
+          <p>Заглушка для секции "О доме". Здесь будет подробное описание с фотографиями интерьера, преимуществами и уникальными особенностями A-frame архитектуры.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Лис-А-Дом. Все права защищены.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+</body>
+</html>

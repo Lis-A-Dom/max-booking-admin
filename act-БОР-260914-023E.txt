@@ -1,0 +1,2 @@
+✅ Подтвердить: https://staywise.ru/api/act/confirm/БОР-260914-023E
+❌ Отклонить: https://staywise.ru/api/act/reject/БОР-260914-023E

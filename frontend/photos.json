@@ -1,0 +1,478 @@
+{
+ "categories": [
+  {
+   "id": "pro",
+   "title": "📸 Студийная съёмка",
+   "photos": [
+    {
+     "src": "/images/001.jpg",
+     "thumb": "/images/thumbs/001.jpg"
+    },
+    {
+     "src": "/images/002.jpg",
+     "thumb": "/images/thumbs/002.jpg"
+    },
+    {
+     "src": "/images/003.jpg",
+     "thumb": "/images/thumbs/003.jpg"
+    },
+    {
+     "src": "/images/004.jpg",
+     "thumb": "/images/thumbs/004.jpg"
+    },
+    {
+     "src": "/images/005.jpg",
+     "thumb": "/images/thumbs/005.jpg"
+    },
+    {
+     "src": "/images/006.jpg",
+     "thumb": "/images/thumbs/006.jpg"
+    },
+    {
+     "src": "/images/007.jpg",
+     "thumb": "/images/thumbs/007.jpg"
+    },
+    {
+     "src": "/images/008.jpg",
+     "thumb": "/images/thumbs/008.jpg"
+    },
+    {
+     "src": "/images/009.jpg",
+     "thumb": "/images/thumbs/009.jpg"
+    },
+    {
+     "src": "/images/010.jpg",
+     "thumb": "/images/thumbs/010.jpg"
+    },
+    {
+     "src": "/images/011.jpg",
+     "thumb": "/images/thumbs/011.jpg"
+    },
+    {
+     "src": "/images/012.jpg",
+     "thumb": "/images/thumbs/012.jpg"
+    },
+    {
+     "src": "/images/013.jpg",
+     "thumb": "/images/thumbs/013.jpg"
+    },
+    {
+     "src": "/images/014.jpg",
+     "thumb": "/images/thumbs/014.jpg"
+    },
+    {
+     "src": "/images/015.jpg",
+     "thumb": "/images/thumbs/015.jpg"
+    },
+    {
+     "src": "/images/016.jpg",
+     "thumb": "/images/thumbs/016.jpg"
+    },
+    {
+     "src": "/images/017.jpg",
+     "thumb": "/images/thumbs/017.jpg"
+    },
+    {
+     "src": "/images/018.jpg",
+     "thumb": "/images/thumbs/018.jpg"
+    },
+    {
+     "src": "/images/019.jpg",
+     "thumb": "/images/thumbs/019.jpg"
+    },
+    {
+     "src": "/images/020.jpg",
+     "thumb": "/images/thumbs/020.jpg"
+    },
+    {
+     "src": "/images/021.jpg",
+     "thumb": "/images/thumbs/021.jpg"
+    },
+    {
+     "src": "/images/022.jpg",
+     "thumb": "/images/thumbs/022.jpg"
+    },
+    {
+     "src": "/images/023.jpg",
+     "thumb": "/images/thumbs/023.jpg"
+    },
+    {
+     "src": "/images/024.jpg",
+     "thumb": "/images/thumbs/024.jpg"
+    },
+    {
+     "src": "/images/025.jpg",
+     "thumb": "/images/thumbs/025.jpg"
+    },
+    {
+     "src": "/images/026.jpg",
+     "thumb": "/images/thumbs/026.jpg"
+    },
+    {
+     "src": "/images/027.jpg",
+     "thumb": "/images/thumbs/027.jpg"
+    },
+    {
+     "src": "/images/028.jpg",
+     "thumb": "/images/thumbs/028.jpg"
+    },
+    {
+     "src": "/images/029.jpg",
+     "thumb": "/images/thumbs/029.jpg"
+    },
+    {
+     "src": "/images/030.jpg",
+     "thumb": "/images/thumbs/030.jpg"
+    },
+    {
+     "src": "/images/031.jpg",
+     "thumb": "/images/thumbs/031.jpg"
+    },
+    {
+     "src": "/images/032.jpg",
+     "thumb": "/images/thumbs/032.jpg"
+    },
+    {
+     "src": "/images/033.jpg",
+     "thumb": "/images/thumbs/033.jpg"
+    },
+    {
+     "src": "/images/034.jpg",
+     "thumb": "/images/thumbs/034.jpg"
+    },
+    {
+     "src": "/images/035.jpg",
+     "thumb": "/images/thumbs/035.jpg"
+    },
+    {
+     "src": "/images/036.jpg",
+     "thumb": "/images/thumbs/036.jpg"
+    },
+    {
+     "src": "/images/037.jpg",
+     "thumb": "/images/thumbs/037.jpg"
+    },
+    {
+     "src": "/images/038.jpg",
+     "thumb": "/images/thumbs/038.jpg"
+    },
+    {
+     "src": "/images/039.jpg",
+     "thumb": "/images/thumbs/039.jpg"
+    },
+    {
+     "src": "/images/040.jpg",
+     "thumb": "/images/thumbs/040.jpg"
+    },
+    {
+     "src": "/images/041.jpg",
+     "thumb": "/images/thumbs/041.jpg"
+    },
+    {
+     "src": "/images/042.jpg",
+     "thumb": "/images/thumbs/042.jpg"
+    },
+    {
+     "src": "/images/043.jpg",
+     "thumb": "/images/thumbs/043.jpg"
+    },
+    {
+     "src": "/images/044.jpg",
+     "thumb": "/images/thumbs/044.jpg"
+    },
+    {
+     "src": "/images/045.jpg",
+     "thumb": "/images/thumbs/045.jpg"
+    },
+    {
+     "src": "/images/046.jpg",
+     "thumb": "/images/thumbs/046.jpg"
+    },
+    {
+     "src": "/images/047.jpg",
+     "thumb": "/images/thumbs/047.jpg"
+    },
+    {
+     "src": "/images/333.jpg",
+     "thumb": "/images/thumbs/333.jpg"
+    }
+   ]
+  },
+  {
+   "id": "summer",
+   "title": "☀️ Лето 2025",
+   "photos": [
+    {
+     "src": "/images/IMG_20250618_130412.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_130412.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_130438.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_130438.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_130510.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_130510.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_130526.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_130526.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_130540.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_130540.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_130557.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_130557.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_130933.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_130933.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_131014.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_131014.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_131138.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_131138.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_131214.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_131214.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_131454.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_131454.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_131534.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_131534.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_131604.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_131604.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_131626.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_131626.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_131905.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_131905.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_131933.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_131933.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_132125.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_132125.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_132157.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_132157.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_132419.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_132419.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_132527.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_132527.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_132643.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_132643.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_132803.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_132803.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_132809.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_132809.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_132837.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_132837.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_132928.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_132928.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_132948.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_132948.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_133123.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_133123.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_133130.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_133130.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_133632.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_133632.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_133646.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_133646.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_133710.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_133710.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_133811.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_133811.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_133919.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_133919.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_133925.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_133925.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_133930.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_133930.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_133952.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_133952.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_134023.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_134023.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_134105.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_134105.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_134125.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_134125.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_134251.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_134251.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_134306.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_134306.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_134731.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_134731.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_134743.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_134743.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_134839.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_134839.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_134936.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_134936.jpg"
+    },
+    {
+     "src": "/images/IMG_20250618_134953.jpg",
+     "thumb": "/images/thumbs/IMG_20250618_134953.jpg"
+    },
+    {
+     "src": "/images/IMG_20250621_112119.jpg",
+     "thumb": "/images/thumbs/IMG_20250621_112119.jpg"
+    },
+    {
+     "src": "/images/IMG_20250621_115309.jpg",
+     "thumb": "/images/thumbs/IMG_20250621_115309.jpg"
+    },
+    {
+     "src": "/images/IMG_20250621_115424.jpg",
+     "thumb": "/images/thumbs/IMG_20250621_115424.jpg"
+    },
+    {
+     "src": "/images/IMG_20250621_115534.jpg",
+     "thumb": "/images/thumbs/IMG_20250621_115534.jpg"
+    },
+    {
+     "src": "/images/IMG_20250621_115601.jpg",
+     "thumb": "/images/thumbs/IMG_20250621_115601.jpg"
+    },
+    {
+     "src": "/images/IMG_20250621_115750.jpg",
+     "thumb": "/images/thumbs/IMG_20250621_115750.jpg"
+    },
+    {
+     "src": "/images/IMG_20250621_115802.jpg",
+     "thumb": "/images/thumbs/IMG_20250621_115802.jpg"
+    },
+    {
+     "src": "/images/IMG_20250621_115855.jpg",
+     "thumb": "/images/thumbs/IMG_20250621_115855.jpg"
+    },
+    {
+     "src": "/images/IMG_20250621_120107.jpg",
+     "thumb": "/images/thumbs/IMG_20250621_120107.jpg"
+    },
+    {
+     "src": "/images/IMG_20250621_120221.jpg",
+     "thumb": "/images/thumbs/IMG_20250621_120221.jpg"
+    },
+    {
+     "src": "/images/IMG_20250621_120254.jpg",
+     "thumb": "/images/thumbs/IMG_20250621_120254.jpg"
+    },
+    {
+     "src": "/images/IMG_20250621_120326.jpg",
+     "thumb": "/images/thumbs/IMG_20250621_120326.jpg"
+    },
+    {
+     "src": "/images/IMG_20250621_120425.jpg",
+     "thumb": "/images/thumbs/IMG_20250621_120425.jpg"
+    },
+    {
+     "src": "/images/IMG_20250621_120634.jpg",
+     "thumb": "/images/thumbs/IMG_20250621_120634.jpg"
+    },
+    {
+     "src": "/images/IMG_20250621_120643.jpg",
+     "thumb": "/images/thumbs/IMG_20250621_120643.jpg"
+    },
+    {
+     "src": "/images/IMG_20250621_120741.jpg",
+     "thumb": "/images/thumbs/IMG_20250621_120741.jpg"
+    },
+    {
+     "src": "/images/IMG_20250623_112537.jpg",
+     "thumb": "/images/thumbs/IMG_20250623_112537.jpg"
+    },
+    {
+     "src": "/images/IMG_20250623_112622.jpg",
+     "thumb": "/images/thumbs/IMG_20250623_112622.jpg"
+    },
+    {
+     "src": "/images/IMG_20250623_170605.jpg",
+     "thumb": "/images/thumbs/IMG_20250623_170605.jpg"
+    }
+   ]
+  },
+  {
+   "id": "autumn",
+   "title": "🍂 Осень 2024",
+   "photos": [
+    {
+     "src": "/images/IMG_20240905_131422.jpg",
+     "thumb": "/images/thumbs/IMG_20240905_131422.jpg"
+    }
+   ]
+  }
+ ]
+}

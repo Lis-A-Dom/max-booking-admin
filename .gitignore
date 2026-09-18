@@ -1,0 +1,11 @@
+admin-board.html
+crm.js
+server.js
+web/src/pages/BookingPage.jsx
+frontend/index.html
+frontend/assets/*
+web/node_modules/
+web/src/pages/BookingPage.jsx.bak
+.env
+.env.*
+*.backup_rotation
