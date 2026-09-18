@@ -861,6 +861,35 @@ app.get('/debug/notify', async (req, res) => {
 });
 app.get('/debug/env', (req, res) => { res.json({ hasToken: !!process.env.MAX_BOOKING_TOKEN, len: (process.env.MAX_BOOKING_TOKEN || '').length, owner: process.env.OWNER_MAX_USER }); });
 app.get('/test', (req, res) => { res.json({ message: 'Работает!' }); });
+/* ---------- ICS-календарь для Авито (RFC 5545) ---------- */
+app.get(['/api/ics', '/ics'], (req, res) => {
+    try {
+        const bs = loadBookings().filter(b => !b.paymentCanceled && (b.status === 'confirmed' || b.status === 'pending' || b.status === 'paid') && b.checkIn && b.checkOut);
+        const CRLF = String.fromCharCode(13, 10);
+        const pad = (n) => String(n).padStart(2, '0');
+        const dt = (d) => { const x = new Date(d); return x.getFullYear() + pad(x.getMonth() + 1) + pad(x.getDate()); };
+        let out = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Lis-A-Dom//RU', 'X-WR-CALNAME:Lis-A-Dom', 'X-WR-TIMEZONE:Europe/Moscow'].join(CRLF) + CRLF;
+        bs.forEach(b => {
+            const lines = [
+                'BEGIN:VEVENT',
+                'UID:' + b.id + '@lis-a-dom.ru',
+                'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z',
+                'DTSTART;VALUE=DATE:' + dt(b.checkIn),
+                'DTEND;VALUE=DATE:' + dt(b.checkOut),
+                'SUMMARY:Занято ' + b.id,
+                'END:VEVENT'
+            ];
+            out += lines.join(CRLF) + CRLF;
+        });
+        out += 'END:VCALENDAR' + CRLF;
+        res.set('Content-Type', 'text/calendar; charset=utf-8');
+        res.send(out);
+    } catch (e) {
+        console.error('ICS error:', e.message);
+        res.status(500).send('ICS error');
+    }
+});
+
 app.listen(PORT, () => console.log('✅ Сервер: http://localhost:' + PORT));
 
 // === HEALTH CHECK (для мониторинга) ===
